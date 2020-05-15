@@ -24,17 +24,17 @@ public class CP implements CardPile{ //class CP.java
   public int [][] placedCards;
 
   public static void main (String  [] args){
-    
+    CP card= new CP();
      switch (args.length) {
       case 0: //0 command line args
        // inputHellos(); break;
       case 1://1 command line args
         //randomHellos(args[0], 1); break;
       case 2://2 command line args
-        this.size=args[0];
-         this.rowL=args[1];
-         load(this.size);
-         System.out.println(getPile());
+        card.size=Integer.parseInt(args[0]);
+         card.rowL=Integer.parseInt(args[1]);
+         card.load(card.size);
+         System.out.println(card.getPile());
        // String all="all";
         // transform(this.rowL,all);
           
