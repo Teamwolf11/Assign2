@@ -77,7 +77,12 @@ public class CP implements CardPile{ //class CP.java
   }//end getPile
   
   public void putDown (int rowLength){
-    
+    for (int row=0;row<rowLength;row++){
+      for(int cols=0;cols<size/rowLength;cols++){
+     
+        
+      }
+    }
     
     
     
