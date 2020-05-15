@@ -23,6 +23,9 @@ public class CP implements CardPile { //class CP.java
     public int[] array1;
     public int[][] placedCards;
     public String[] specification;
+    public int[] originalCards;
+    public int numRows;
+    public int numCols;
 
 
     public static void main(String[] args) {
@@ -33,45 +36,69 @@ public class CP implements CardPile { //class CP.java
             case 1://1 command line args
                 //randomHellos(args[0], 1); break;
             case 2://2 command line args
+
                 card.size = Integer.parseInt(args[0]);
+
                 card.rowL = Integer.parseInt(args[1]);
                 card.load(card.size);
                 // System.out.println(card.getPile());
                 // String all="all";
                 // transform(this.rowL,all);
-                card.specification = new String[]{"TL", "BL", "TR", "BR", "LT", "LB", "RT", "RB"};
-                for (int counter = 0; counter < 8; counter++) {
-                    System.out.println(card.specification[counter] + " " + card.count(card.rowL,card.specification[counter]));
-                }//end for
-                card.putDown(card.rowL);
-                //for outputing 2d array
-                for (int i = 0; i < card.placedCards.length; i++) {
-                    for (int j = 0; j < card.placedCards[i].length; j++) {
-                        System.out.print(card.placedCards[i][j] + " ");
-                    }//end inner for
-                    System.out.println();
-                }//end outer for
+                if (card.size % card.rowL != 0) {
 
+                    try {
 
+                        throw new CardPileException("Number given for size is not multiple of rowLength");
+                    } catch (CardPileException e) {
+                        System.err.println(e+": Number given for size is not multiple of rowLength");
+                    }//end catch
+                }else {
+                    card.specification = new String[]{"TL", "BL", "TR", "BR", "LT", "LB", "RT", "RB"};
+                    for (int counter = 0; counter < 8; counter++) {
+                        System.out.println(card.specification[counter] + " " + card.count(card.rowL, card.specification[counter]));
+                    }//end for
+                    card.putDown(card.rowL);
+                }//end else
 
                 break;
             default://this will run when there is more than 3 arguments
                 card.size = Integer.parseInt(args[0]);
-                card.specification=new String [args.length-2];
+                card.specification = new String[args.length - 2];
                 System.arraycopy(args, 2, card.specification, 0, args.length - 2);
 
-                card.rowL=Integer.parseInt(args[1]);
+                card.rowL = Integer.parseInt(args[1]);
                 card.load(card.size);
 
-                for(int i=0;i<args.length-2;i++){
-                    card.transform(card.rowL,card.specification[i]);
-                    System.out.println("It has done the transform for "+card.rowL+" and "+card.specification[i]);
+                for (int i = 0; i < args.length - 2; i++) {
+                    if (card.size % card.rowL != 0) {
 
-                int []pileCopy=card.getPile();
-                        for (int num:pileCopy){//this will print out the array in one line
-                            System.out.print(num+" ");
+                        try {
 
-                        }
+                            throw new CardPileException("Number given for size is not multiple of rowLength");
+                        } catch (CardPileException e) {
+                            System.err.println(e+": Number given for size is not multiple of rowLength");
+                        break;
+                        }//end catch
+                    }else if(!(card.specification[i].equals("TL")||card.specification[i].equals("TR")||
+                            card.specification[i].equals("BL")||card.specification[i].equals("BR")||
+                            card.specification[i].equals("LT")||card.specification[i].equals("LB")
+                    ||card.specification[i].equals("RT")||card.specification[i].equals("RB"))){
+                        try {
+                            throw new CardPileException("You have not given one of the 8 specifications");
+                        } catch (CardPileException e) {
+                            System.err.println(e+": You have not given one of the 8 specifications");
+                            break;
+                        }//end catch
+
+                    }//end else if
+                    card.transform(card.rowL, card.specification[i]);
+                    System.out.println("It has done the transform for " + card.rowL + " and " + card.specification[i]);
+
+                    int[] pileCopy = card.getPile();
+                    for (int num : pileCopy) {//this will print out the array in one line
+                        System.out.print(num + " ");
+
+                    }//end for
                     System.out.println();
                 }//end for
         }//end switch
@@ -82,8 +109,9 @@ public class CP implements CardPile { //class CP.java
     /**
      * Loads a copy of the given array as the pile of cards.
      */
-    public void load(int[] cards) {
-        pile = Arrays.copyOf(cards, cards.length);
+    public void load(int[] originalCards) {
+        this.originalCards = originalCards;
+        pile = Arrays.copyOf(originalCards, originalCards.length);
         size = pile.length;
     }//end load
 
@@ -93,7 +121,7 @@ public class CP implements CardPile { //class CP.java
     public void load(int n) {
         size = n;
         array1 = new int[size];
-        for (int counter = 0; counter<size;counter++){
+        for (int counter = 0; counter < size; counter++) {
             array1[counter] = counter + 1;
         }//end for loop //this initialises the array with size n
 
@@ -113,20 +141,19 @@ public class CP implements CardPile { //class CP.java
     public void putDown(int rowLength) {
         int index = 0;
 
-            int numRows=size/rowLength;
-            int numCols=rowLength;
-            placedCards=new int[numRows][numCols];
+        numRows = size / rowLength;
+        numCols = rowLength;
+        placedCards = new int[numRows][numCols];
         for (int row = 0; row < numRows; row++) {//the number of rows is the size of whole array/rowLength
             for (int cols = 0; cols < numCols; cols++) {//Don't change this Mike. Draw the 2D array to prove it.
-//                System.out.println(pile[index]);
-//                System.out.println(row+" "+cols);
+                //                System.out.println(pile[index]);
+                //                System.out.println(row+" "+cols);
                 placedCards[row][cols] = pile[index];
 
 
                 index++;
             }//inner for
         }//outer for
-
 
     }//end putDown
 
@@ -137,24 +164,37 @@ public class CP implements CardPile { //class CP.java
      * the specification is invalid.
      */
     public void transform(int rowLength, String spec) {
+
+
         if (spec.equals("TL")) {
-System.out.println("It executed TL");
+            System.out.println("It executed TL");
         } else if (spec.equals("TR")) {
 
-        }else if (spec.equals("BL")) {
+        } else if (spec.equals("BL")) {
 
-        }else if (spec.equals("BR")) {
+        } else if (spec.equals("BR")) {
             System.out.println("It executed BR");
 
-        }else if (spec.equals("LT")) {
+        } else if (spec.equals("LT")) {
+            putDown(rowL);
+            numRows = size / rowLength;
+            numCols = rowLength;
+            int index = 0;
+            for (int row = 0; row < numRows; row++) {
+                for (int cols = 0; cols < numCols; cols++) {
+                    pile[index] = placedCards[row][cols];
+                    index++;
+                }//inner for
+            }//outer for
 
-        }else if (spec.equals("RT")) {
 
-        }else if (spec.equals("LB")) {
+        } else if (spec.equals("RT")) {
 
-        }else if (spec.equals("RB")) {
+        } else if (spec.equals("LB")) {
 
-        }
+        } else if (spec.equals("RB")) {
+
+        } //end else if
 
     }//end transform
 
@@ -168,8 +208,13 @@ System.out.println("It executed TL");
     public int count(int rowLength, String spec) {
 
         System.out.println("It executed Count");
-return 5;
+        return 5;
     }//count
 
 
+
+    private static class CardPileException extends Throwable {
+        public CardPileException(String s) {
+        }
+    }
 }//end class
