@@ -50,14 +50,14 @@ public class CP implements CardPile{ //class CP.java
      Loads a copy of the given array as the pile of cards.   
   */
   public void load(int[] cards){
-    
+    pile= Arrays.copyOf(cards,cards.length);
   }//end load 
   
   /**
      Creates a pile of n cards numbered (top to bottom) from 1 to n.    
   */
   public void load(int n){
-    this.size=n;
+    size=n;
     array1=new int [size];
     for (int counter=0,counter<size;counter++){
       array1[counter] = counter+1;
@@ -77,9 +77,10 @@ public class CP implements CardPile{ //class CP.java
   }//end getPile
   
   public void putDown (int rowLength){
+    int index=0;
     for (int row=0;row<size/rowLength;row++){//the number of rows is the size of whole array/rowLength
       for(int cols=0;cols<rowLength;cols++){//Don't change this Mike. Draw the 2D array to prove it.
-     
+     placedCards[row][cols]=pile[index]
         
       }
     }
