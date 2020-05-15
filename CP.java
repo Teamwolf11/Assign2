@@ -51,6 +51,7 @@ public class CP implements CardPile{ //class CP.java
   */
   public void load(int[] cards){
     pile= Arrays.copyOf(cards,cards.length);
+    size=pile.length;
   }//end load 
   
   /**
