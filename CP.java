@@ -95,10 +95,6 @@ public class CP implements CardPile{
         }else if (spec.equals("RB"){ 
             rightBottom();
         }
-              
-      }//end transform                                                                  
-                                                              
-    }
     
   }//end transform
   
