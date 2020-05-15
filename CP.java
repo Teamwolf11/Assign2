@@ -80,8 +80,8 @@ public class CP implements CardPile{ //class CP.java
     int index=0;
     for (int row=0;row<size/rowLength;row++){//the number of rows is the size of whole array/rowLength
       for(int cols=0;cols<rowLength;cols++){//Don't change this Mike. Draw the 2D array to prove it.
-     placedCards[row][cols]=pile[index]
-        
+     placedCards[row][cols]=pile[index];
+        index++;
       }
     }
     
