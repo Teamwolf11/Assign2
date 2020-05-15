@@ -1,5 +1,12 @@
 package week11;
 
+/**
+* Deal with It – COSC241 ASSIGNMENT
+* @author Mike Cui
+* @author Riya Alagh
+* Purpose of this assignment is to create a sorting program to sort cards given a respective specification
+*/
+
 import java.lang.*;
 import java.util.*;
 
