@@ -43,6 +43,17 @@ public class CP implements CardPile { //class CP.java
                 for (int counter = 0; counter < 8; counter++) {
                     System.out.println(card.specification[counter] + " " + card.count(card.rowL,card.specification[counter]));
                 }//end for
+                card.putDown(card.rowL);
+                //for outputing 2d array
+                for (int i = 0; i < card.placedCards.length; i++) {
+                    for (int j = 0; j < card.placedCards[i].length; j++) {
+                        System.out.print(card.placedCards[i][j] + " ");
+                    }//end inner for
+                    System.out.println();
+                }//end outer for
+
+
+
                 break;
             default://this will run when there is more than 3 arguments
                 card.size = Integer.parseInt(args[0]);
@@ -101,12 +112,22 @@ public class CP implements CardPile { //class CP.java
 
     public void putDown(int rowLength) {
         int index = 0;
-        for (int row = 0; row < size / rowLength; row++) {//the number of rows is the size of whole array/rowLength
-            for (int cols = 0; cols < rowLength; cols++) {//Don't change this Mike. Draw the 2D array to prove it.
+
+            int numRows=size/rowLength;
+            int numCols=rowLength;
+            placedCards=new int[numRows][numCols];
+        for (int row = 0; row < numRows; row++) {//the number of rows is the size of whole array/rowLength
+            for (int cols = 0; cols < numCols; cols++) {//Don't change this Mike. Draw the 2D array to prove it.
+//                System.out.println(pile[index]);
+//                System.out.println(row+" "+cols);
                 placedCards[row][cols] = pile[index];
+
+
                 index++;
-            }
-        }
+            }//inner for
+        }//outer for
+
+
     }//end putDown
 
     /**
