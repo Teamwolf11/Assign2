@@ -10,7 +10,7 @@ package week11;
 import java.lang.*;
 import java.util.*;
 
-public class CP implements CardPile{ //class CP
+public class CP implements CardPile{ //class CP.java
   
   public int [] pile;
   public int size;
