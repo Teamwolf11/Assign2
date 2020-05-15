@@ -103,8 +103,7 @@ public class CP implements CardPile{
         }else(specs.equals("all")
               
       }//end transform                                                                  
-                                                                  
-      }//end transform                                                                 
+                                                              
     }
     
   }//end transform
