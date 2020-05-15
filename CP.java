@@ -78,8 +78,7 @@ public class CP implements CardPile{
   */   
   public void transform(int rowLength, String spec){
         if (spec.equals("TL")){                                                                                    
-            topLeft();                                                                                           
-        }else if (spec.equals("all"){                                                                              
+            topLeft();                                                                                                                                                                       
         }else if (spec.equals("TR"){ 
             topRight();                                                                         
         }else if (spec.equals("BL"){
