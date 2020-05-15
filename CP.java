@@ -12,10 +12,10 @@ import java.util.*;
 
 public class CP implements CardPile{
   
-  public static int [] pile;
-  public static int size;
-  public static int rowL;
-  public static int [] array1;
+  public int [] pile;
+  public int size;
+  public int rowL;
+  public int [] array1;
 
   public static void main (String  [] args){
     
