@@ -81,26 +81,20 @@ public class CP implements CardPile{
             topLeft();                                                                                           
         }else if (spec.equals("all"){                                                                              
         }else if (spec.equals("TR"){ 
-            topRight(); 
-        }else if(spec.equals("all"){                                                                           
+            topRight();                                                                         
         }else if (spec.equals("BL"){
-            bottomLeft();
-        }else if(spec.equals("all"){                                                                   
+            bottomLeft();                                                                
         }else if (spec.equals("BR"){
-            bottomRight();
-        }else if(spec.equals("all"){                                                           
+            bottomRight();                                                         
         }else if (spec.equals("LT"){
-            leftTop();
-        }else if(spec.equals("all"){                                                   
+            leftTop();                                                  
         }else if (spec.equals("RT"){
-            rightTop();
-        }else if(spec.equals("all"){                                           
+            rightTop();                                          
         }else if (spec.equals("LB"){
-            leftBottom();
-        }else if(spec.equals("all"){                                   
+            leftBottom();                                
         }else if (spec.equals("RB"){ 
             rightBottom();
-        }else(specs.equals("all")
+        }
               
       }//end transform                                                                  
                                                               
