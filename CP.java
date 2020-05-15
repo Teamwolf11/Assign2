@@ -5,22 +5,29 @@ import java.util.*;
 
 public class CP implements CardPile{
   
-  int [] pile= new int [50];
   
+    
+  public static int [] pile;
+  public static int size;
+  public static int rowL;
+  public static int [] array1;
+
   public static void main (String  [] args){
     
      switch (args.length) {
-      case 0:
-        inputHellos(); break;
-      case 1:
-        randomHellos(args[0], 1); break;
-      case 2:
-        if (args[1].equals("all")) {  
-          allHello(args[0]);        
-        } else {
-          randomHellos(args[0], Integer.parseInt(args[1]));     
-        }
-        break;
+      case 0: //0 command line args
+       // inputHellos(); break;
+      case 1://1 command line args
+        //randomHellos(args[0], 1); break;
+      case 2://2 command line args
+        this.size=args[0];
+         this.rowL=args[1];
+         load(this.size);
+         System.out.println(getPile());
+       // String all="all";
+        // transform(this.rowL,all);
+          
+          break;
       default:
         System.out.println("Incorrect number of arguments");    
     }
@@ -39,9 +46,13 @@ public class CP implements CardPile{
      Creates a pile of n cards numbered (top to bottom) from 1 to n.    
   */
   public void load(int n){
+    this.size=n;
+    array1=new int [size];
+    for (int counter=0,counter<size;counter++){
+      array1[counter] = counter+1;
+    }//end for loop //this initialises the array with size n
     
-    
-    
+    pile= Arrays.copyOf(array1,size);    
   }//end load
   
   /**
@@ -49,6 +60,8 @@ public class CP implements CardPile{
   */
   public int[] getPile(){
     
+    int [] badPile= Arrays.copyOf(pile,size);
+    return badPile;
     
   }//end getPile
   
@@ -60,6 +73,13 @@ public class CP implements CardPile{
   */   
   public void transform(int rowLength, String spec){
     
+    
+    if (spec.equals("TL")){
+      topLeft()
+    }else if (spec.equals("all"){
+    }else if (spec.equals("BL"){
+      
+    }
     
   }//end transform
   
