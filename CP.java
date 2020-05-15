@@ -1,5 +1,13 @@
 package week11;
 
+
+
+import java.lang.*;
+import java.util.*;
+import java.util.Scanner;
+import java.util.Arrays;
+
+
 /**
 * Deal with It – COSC241 ASSIGNMENT
 * @author Mike Cui
@@ -7,15 +15,13 @@ package week11;
 * Purpose of this assignment is to create a sorting program to sort cards given a respective specification
 */
 
-import java.lang.*;
-import java.util.*;
-
 public class CP implements CardPile{ //class CP.java
   
   public int [] pile;
   public int size;
   public int rowL;
   public int [] array1;
+  public int [][] placedCards;
 
   public static void main (String  [] args){
     
@@ -70,6 +76,12 @@ public class CP implements CardPile{ //class CP.java
     
   }//end getPile
   
+  public void putDown (int rowLength){
+    
+    
+    
+    
+  }//end putDown
   /**
      Transforms the pile of cards given a row length and a specification
      for picking them up. See assignment details for required behaviour
@@ -78,21 +90,21 @@ public class CP implements CardPile{ //class CP.java
   */   
   public void transform(int rowLength, String spec){
         if (spec.equals("TL")){                                                                                    
-            topLeft();                                                                                                                                                                       
+                                                                                                                                                                                   
         }else if (spec.equals("TR"){ 
-            topRight();                                                                         
+                                                                                     
         }else if (spec.equals("BL"){
-            bottomLeft();                                                                
+                                                                          
         }else if (spec.equals("BR"){
-            bottomRight();                                                         
+                                                                   
         }else if (spec.equals("LT"){
-            leftTop();                                                  
+                                                             
         }else if (spec.equals("RT"){
-            rightTop();                                          
+                                                  
         }else if (spec.equals("LB"){
-            leftBottom();                                
+                                         
         }else if (spec.equals("RB"){ 
-            rightBottom();
+            
         }
     
   }//end transform
