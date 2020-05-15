@@ -1,12 +1,17 @@
 package week11;
 
+/**
+* Deal with It – COSC241 ASSIGNMENT
+* @author Mike Cui
+* @author Riya Alagh
+* Purpose of this assignment is to create a sorting program to sort cards given a respective specification
+*/
+
 import java.lang.*;
 import java.util.*;
 
 public class CP implements CardPile{
   
-  
-    
   public static int [] pile;
   public static int size;
   public static int rowL;
@@ -72,13 +77,33 @@ public class CP implements CardPile{
      the specification is invalid.
   */   
   public void transform(int rowLength, String spec){
-    
-    
-    if (spec.equals("TL")){
-      topLeft()
-    }else if (spec.equals("all"){
-    }else if (spec.equals("BL"){
-      
+        if (spec.equals("TL")){                                                                                    
+            topLeft();                                                                                           
+        }else if (spec.equals("all"){                                                                              
+        }else if (spec.equals("TR"){ 
+            topRight(); 
+        }else if(spec.equals("all"){                                                                           
+        }else if (spec.equals("BL"){
+            bottomLeft();
+        }else if(spec.equals("all"){                                                                   
+        }else if (spec.equals("BR"){
+            bottomRight();
+        }else if(spec.equals("all"){                                                           
+        }else if (spec.equals("LT"){
+            leftTop();
+        }else if(spec.equals("all"){                                                   
+        }else if (spec.equals("RT"){
+            rightTop();
+        }else if(spec.equals("all"){                                           
+        }else if (spec.equals("LB"){
+            leftBottom();
+        }else if(spec.equals("all"){                                   
+        }else if (spec.equals("RB"){ 
+            rightBottom();
+        }else(specs.equals("all")
+              
+      }//end transform                                                                  
+                                                              
     }
     
   }//end transform
