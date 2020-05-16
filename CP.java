@@ -54,7 +54,7 @@ public class CP implements CardPile { //class CP.java
                     for (int counter =0; counter < 8; counter++) {
                         System.out.println(card.specification[counter] + " " + card.count(card.rowLength, card.specification[counter]));
                     }//end for
-                    System.out.println(card.size+" "+ card.rowLength);
+                    
                 }//end else if
 
                 break;
