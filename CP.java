@@ -2,8 +2,6 @@ package week11;
 
 
 import java.lang.*;
-import java.util.*;
-import java.util.Scanner;
 import java.util.Arrays;
 
 
@@ -19,7 +17,7 @@ public class CP implements CardPile { //class CP.java
 
     public int[] pile;
     public int size;
-    public int rowL;
+    public int rowLength;
     public int[][] placedCards;
     public String[] specification;
     public int[] originalCards;
@@ -39,12 +37,12 @@ public class CP implements CardPile { //class CP.java
 
                 card.size = Integer.parseInt(args[0]);
 
-                card.rowL = Integer.parseInt(args[1]);
+                card.rowLength = Integer.parseInt(args[1]);
                 card.load(card.size);
                 // System.out.println(card.getPile());
                 // String all="all";
                 // transform(this.rowL,all);
-                if (card.size % card.rowL != 0) {
+                if (card.size % card.rowLength != 0) {
 
                     try {
 
@@ -56,7 +54,7 @@ public class CP implements CardPile { //class CP.java
                 }else {
                     card.specification = new String[]{"TL", "BL", "TR", "BR", "LT", "LB", "RT", "RB"};
                     for (int counter = 0; counter < 8; counter++) {
-                        System.out.println(card.specification[counter] + " " + card.count(card.rowL, card.specification[counter]));
+                        System.out.println(card.specification[counter] + " " + card.count(card.rowLength, card.specification[counter]));
                     }//end for
 
                 }//end else
@@ -67,7 +65,7 @@ public class CP implements CardPile { //class CP.java
                 card.specification = new String[args.length - 2];//if there is 3 arguements, 3-2=1 so will for example add TL to the array.
                 System.arraycopy(args, 2, card.specification, 0, args.length - 2);
 
-                card.rowL = Integer.parseInt(args[1]);
+                card.rowLength = Integer.parseInt(args[1]);
                 card.load(card.size);
 
                 /**THIS WILL WRITE OUT ALL THE ARRAY THAT WAS ENTERED. We have to do this as it's what they did*/
@@ -81,7 +79,7 @@ public class CP implements CardPile { //class CP.java
                 for (int i = 0; i < args.length - 2; i++) {
 
 //--------------------------------------------------------------------------------------------------------------------------
-                    if (card.size % card.rowL != 0) {
+                    if (card.size % card.rowLength != 0) {
                         //all this stuff in between these lines are for exceptions for case 2
                         try {/** THIS IS TO THROW THE EXCEPTION IF THE ROW LENGTH AND SIZE ARE BAD NUMBERS*/
 
@@ -105,8 +103,8 @@ public class CP implements CardPile { //class CP.java
 
                     }//end else if
  //--------------------------------------------------------------------------------------------------------------------------
-                    card.transform(card.rowL, card.specification[i]);
-                    System.out.println("It has done the transform for " + card.rowL + " and " + card.specification[i]);
+                    card.transform(card.rowLength, card.specification[i]);
+                    System.out.println("It has done the transform for " + card.rowLength + " and " + card.specification[i]);
 
                     pileCopy = card.getPile();
                     for (int num : pileCopy) {//this will print out the array in one line
@@ -178,14 +176,14 @@ public class CP implements CardPile { //class CP.java
      * the specification is invalid.
      */
     public void transform(int rowLength, String spec) {
-       
-        putDown(rowL);
+
+        putDown(this.rowLength);
         numRows = size / rowLength;
         numCols = rowLength;
         int index = 0;
 
         if (spec.equals("TL")) {
-            
+
             for (int cols=0; cols<numCols; cols++) {
                 for (int row = 0; row < numRows; row++) {
                     pile[index] = placedCards[row][cols];
@@ -194,7 +192,7 @@ public class CP implements CardPile { //class CP.java
             }//outer for
 //--------------------------------------------------------------------------------------------------------------------------
         } else if (spec.equals("TR")) {
-            
+
             for (int cols=numCols-1; cols>=0; cols--) {
                 for (int row = 0; row < numRows; row++) {
                     pile[index] = placedCards[row][cols];
@@ -203,7 +201,7 @@ public class CP implements CardPile { //class CP.java
             }//outer for
 //--------------------------------------------------------------------------------------------------------------------------
         } else if (spec.equals("BL")) {
-           
+
             for (int cols=0; cols<numCols; cols++) {
                 for (int row =numRows-1; row >=0; row--) {
                     pile[index] = placedCards[row][cols];
@@ -212,7 +210,7 @@ public class CP implements CardPile { //class CP.java
             }//outer for
 //--------------------------------------------------------------------------------------------------------------------------
         } else if (spec.equals("BR")) {
-           
+
             for (int cols=numCols-1; cols>=0; cols--) {
                 for (int row =numRows-1; row >=0; row--) {
                     pile[index] = placedCards[row][cols];
@@ -221,7 +219,7 @@ public class CP implements CardPile { //class CP.java
             }//outer for
 //--------------------------------------------------------------------------------------------------------------------------
         } else if (spec.equals("LT")) {
-            
+
             for (int row = 0; row < numRows; row++) {
                 for (int cols = 0; cols < numCols; cols++) {
                     pile[index] = placedCards[row][cols];
@@ -231,7 +229,7 @@ public class CP implements CardPile { //class CP.java
 
 //--------------------------------------------------------------------------------------------------------------------------
         } else if (spec.equals("RT")) {
-            
+
             for (int row = 0; row < numRows; row++) {
                 for (int cols=numCols-1; cols>=0; cols--) {
                     pile[index] = placedCards[row][cols];
@@ -240,7 +238,7 @@ public class CP implements CardPile { //class CP.java
             }//outer for
             //--------------------------------------------------------------------------------------------------------------------------
         } else if (spec.equals("LB")) {
-            
+
             for (int row =numRows-1; row >=0; row--) {
                 for (int cols = 0; cols < numCols; cols++) {
                     pile[index] = placedCards[row][cols];
@@ -249,7 +247,7 @@ public class CP implements CardPile { //class CP.java
             }//outer for
             //--------------------------------------------------------------------------------------------------------------------------
         } else if (spec.equals("RB")) {
-            
+
             for (int row =numRows-1; row >=0; row--) {
                 for (int cols=numCols-1; cols>=0; cols--) {
                     pile[index] = placedCards[row][cols];
@@ -269,8 +267,15 @@ public class CP implements CardPile { //class CP.java
      * @return
      */
     public int count(int rowLength, String spec) {
+int counter = 0;
+do {
+    counter++;
 
-        
+
+
+
+
+}while (!Arrays.equals(originalCards, pile))
         return 5;
     }//count
 
