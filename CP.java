@@ -54,6 +54,7 @@ public class CP implements CardPile { //class CP.java
                 break;
             case 1:
                 System.out.println("You need to enter the args as size of row then row length then (optional) more spec, you have entered just one number");
+                break;
             case 2://2 command line args
 
                 card.size = Integer.parseInt(args[0]);
@@ -96,7 +97,6 @@ public class CP implements CardPile { //class CP.java
                             if (card.size % card.rowLength != 0) {
                                 card.message = "Number given for size is not multiple of rowLength ";
                                 throw new CardPileException(card.message);
-
                             }
 
                         } catch (CardPileException e) {
