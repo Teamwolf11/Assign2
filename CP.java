@@ -200,7 +200,16 @@ public class CP implements CardPile { //class CP.java
                 }//inner for
             }//outer for
         } else if (spec.equals("BR")) {
-         
+            putDown(rowL);
+            numRows = size / rowLength;
+            numCols = rowLength;
+            int index = 0;
+            for (int cols=numCols-1; cols>=0; cols--) {
+                for (int row =numRows-1; row >=0; row--) {
+                    pile[index] = placedCards[row][cols];
+                    index++;
+                }//inner for
+            }//outer for
 
         } else if (spec.equals("LT")) {
             putDown(rowL);
@@ -216,12 +225,39 @@ public class CP implements CardPile { //class CP.java
 
 
         } else if (spec.equals("RT")) {
-
+            putDown(rowL);
+            numRows = size / rowLength;
+            numCols = rowLength;
+            int index = 0;
+            for (int row = 0; row < numRows; row++) {
+                for (int cols=numCols-1; cols>=0; cols--) {
+                    pile[index] = placedCards[row][cols];
+                    index++;
+                }//inner for
+            }//outer for
         } else if (spec.equals("LB")) {
-
+            putDown(rowL);
+            numRows = size / rowLength;
+            numCols = rowLength;
+            int index = 0;
+            for (int row =numRows-1; row >=0; row--) {
+                for (int cols = 0; cols < numCols; cols++) {
+                    pile[index] = placedCards[row][cols];
+                    index++;
+                }//inner for
+            }//outer for
         } else if (spec.equals("RB")) {
-
-        } //end else if
+            putDown(rowL);
+            numRows = size / rowLength;
+            numCols = rowLength;
+            int index = 0;
+            for (int row =numRows-1; row >=0; row--) {
+                for (int cols=numCols-1; cols>=0; cols--) {
+                    pile[index] = placedCards[row][cols];
+                    index++;
+                }//inner for
+            }//outer for
+        } //end else if FOR ALL THE SPECS
 
     }//end transform
 
