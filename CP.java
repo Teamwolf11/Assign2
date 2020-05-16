@@ -171,18 +171,36 @@ public class CP implements CardPile { //class CP.java
             numRows = size / rowLength;
             numCols = rowLength;
             int index = 0;
-            for (int cols = 0; cols < numCols; cols++) {
+            for (int cols=0; cols<numCols; cols++) {
                 for (int row = 0; row < numRows; row++) {
                     pile[index] = placedCards[row][cols];
                     index++;
                 }//inner for
             }//outer for
         } else if (spec.equals("TR")) {
-
+            putDown(rowL);
+            numRows = size / rowLength;
+            numCols = rowLength;
+            int index = 0;
+            for (int cols=numCols-1; cols>=0; cols--) {
+                for (int row = 0; row < numRows; row++) {
+                    pile[index] = placedCards[row][cols];
+                    index++;
+                }//inner for
+            }//outer for
         } else if (spec.equals("BL")) {
-
+            putDown(rowL);
+            numRows = size / rowLength;
+            numCols = rowLength;
+            int index = 0;
+            for (int cols=0; cols<numCols; cols++) {
+                for (int row =numRows-1; row >=0; row--) {
+                    pile[index] = placedCards[row][cols];
+                    index++;
+                }//inner for
+            }//outer for
         } else if (spec.equals("BR")) {
-            System.out.println("It executed BR");
+         
 
         } else if (spec.equals("LT")) {
             putDown(rowL);
