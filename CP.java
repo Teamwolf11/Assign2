@@ -107,7 +107,7 @@ public class CP implements CardPile { //class CP.java
                     card.transform(card.rowL, card.specification[i]);
                     System.out.println("It has done the transform for " + card.rowL + " and " + card.specification[i]);
 
-                    int[] pileCopy = card.getPile();
+                    pileCopy = card.getPile();
                     for (int num : pileCopy) {//this will print out the array in one line
                         System.out.print(num + " ");
 
