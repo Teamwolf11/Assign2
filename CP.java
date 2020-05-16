@@ -20,7 +20,6 @@ public class CP implements CardPile { //class CP.java
     public int[] pile;
     public int size;
     public int rowL;
-    public int[] array1;
     public int[][] placedCards;
     public String[] specification;
     public int[] originalCards;
@@ -53,18 +52,19 @@ public class CP implements CardPile { //class CP.java
                     } catch (CardPileException e) {
                         System.err.println(e+": Number given for size is not multiple of rowLength");
                     }//end catch
+                    break;
                 }else {
                     card.specification = new String[]{"TL", "BL", "TR", "BR", "LT", "LB", "RT", "RB"};
                     for (int counter = 0; counter < 8; counter++) {
                         System.out.println(card.specification[counter] + " " + card.count(card.rowL, card.specification[counter]));
                     }//end for
-                    card.putDown(card.rowL);
+
                 }//end else
 
                 break;
             default://this will run when there is more than 3 arguments
                 card.size = Integer.parseInt(args[0]);
-                card.specification = new String[args.length - 2];
+                card.specification = new String[args.length - 2];//if there is 3 arguements, 3-2=1 so will for example add TL to the array.
                 System.arraycopy(args, 2, card.specification, 0, args.length - 2);
 
                 card.rowL = Integer.parseInt(args[1]);
@@ -79,8 +79,9 @@ public class CP implements CardPile { //class CP.java
                 System.out.println();
 
                 for (int i = 0; i < args.length - 2; i++) {
-                    if (card.size % card.rowL != 0) {
+
 //--------------------------------------------------------------------------------------------------------------------------
+                    if (card.size % card.rowL != 0) {
                         //all this stuff in between these lines are for exceptions for case 2
                         try {/** THIS IS TO THROW THE EXCEPTION IF THE ROW LENGTH AND SIZE ARE BAD NUMBERS*/
 
@@ -133,9 +134,9 @@ public class CP implements CardPile { //class CP.java
      */
     public void load(int n) {
         size = n;
-        array1 = new int[size];
+        originalCards = new int[size];
         for (int counter = 0; counter < size; counter++) {
-            array1[counter] = counter + 1;
+            originalCards[counter] = counter + 1;
         }//end for loop //this initialises the array with size n
 
         pile = Arrays.copyOf(array1, size);
@@ -146,8 +147,8 @@ public class CP implements CardPile { //class CP.java
      */
     public int[] getPile() {
 
-        int[] badPile = Arrays.copyOf(pile, size);
-        return badPile;
+        int[] copyArray = Arrays.copyOf(pile, size);
+        return copyArray;
 
     }//end getPile
 
@@ -177,13 +178,14 @@ public class CP implements CardPile { //class CP.java
      * the specification is invalid.
      */
     public void transform(int rowLength, String spec) {
-
+       
+        putDown(rowL);
+        numRows = size / rowLength;
+        numCols = rowLength;
+        int index = 0;
 
         if (spec.equals("TL")) {
-            putDown(rowL);
-            numRows = size / rowLength;
-            numCols = rowLength;
-            int index = 0;
+            
             for (int cols=0; cols<numCols; cols++) {
                 for (int row = 0; row < numRows; row++) {
                     pile[index] = placedCards[row][cols];
@@ -192,10 +194,7 @@ public class CP implements CardPile { //class CP.java
             }//outer for
 //--------------------------------------------------------------------------------------------------------------------------
         } else if (spec.equals("TR")) {
-            putDown(rowL);
-            numRows = size / rowLength;
-            numCols = rowLength;
-            int index = 0;
+            
             for (int cols=numCols-1; cols>=0; cols--) {
                 for (int row = 0; row < numRows; row++) {
                     pile[index] = placedCards[row][cols];
@@ -204,10 +203,7 @@ public class CP implements CardPile { //class CP.java
             }//outer for
 //--------------------------------------------------------------------------------------------------------------------------
         } else if (spec.equals("BL")) {
-            putDown(rowL);
-            numRows = size / rowLength;
-            numCols = rowLength;
-            int index = 0;
+           
             for (int cols=0; cols<numCols; cols++) {
                 for (int row =numRows-1; row >=0; row--) {
                     pile[index] = placedCards[row][cols];
@@ -216,10 +212,7 @@ public class CP implements CardPile { //class CP.java
             }//outer for
 //--------------------------------------------------------------------------------------------------------------------------
         } else if (spec.equals("BR")) {
-            putDown(rowL);
-            numRows = size / rowLength;
-            numCols = rowLength;
-            int index = 0;
+           
             for (int cols=numCols-1; cols>=0; cols--) {
                 for (int row =numRows-1; row >=0; row--) {
                     pile[index] = placedCards[row][cols];
@@ -228,10 +221,7 @@ public class CP implements CardPile { //class CP.java
             }//outer for
 //--------------------------------------------------------------------------------------------------------------------------
         } else if (spec.equals("LT")) {
-            putDown(rowL);
-            numRows = size / rowLength;
-            numCols = rowLength;
-            int index = 0;
+            
             for (int row = 0; row < numRows; row++) {
                 for (int cols = 0; cols < numCols; cols++) {
                     pile[index] = placedCards[row][cols];
@@ -241,10 +231,7 @@ public class CP implements CardPile { //class CP.java
 
 //--------------------------------------------------------------------------------------------------------------------------
         } else if (spec.equals("RT")) {
-            putDown(rowL);
-            numRows = size / rowLength;
-            numCols = rowLength;
-            int index = 0;
+            
             for (int row = 0; row < numRows; row++) {
                 for (int cols=numCols-1; cols>=0; cols--) {
                     pile[index] = placedCards[row][cols];
@@ -253,10 +240,7 @@ public class CP implements CardPile { //class CP.java
             }//outer for
             //--------------------------------------------------------------------------------------------------------------------------
         } else if (spec.equals("LB")) {
-            putDown(rowL);
-            numRows = size / rowLength;
-            numCols = rowLength;
-            int index = 0;
+            
             for (int row =numRows-1; row >=0; row--) {
                 for (int cols = 0; cols < numCols; cols++) {
                     pile[index] = placedCards[row][cols];
@@ -265,10 +249,7 @@ public class CP implements CardPile { //class CP.java
             }//outer for
             //--------------------------------------------------------------------------------------------------------------------------
         } else if (spec.equals("RB")) {
-            putDown(rowL);
-            numRows = size / rowLength;
-            numCols = rowLength;
-            int index = 0;
+            
             for (int row =numRows-1; row >=0; row--) {
                 for (int cols=numCols-1; cols>=0; cols--) {
                     pile[index] = placedCards[row][cols];
@@ -289,7 +270,7 @@ public class CP implements CardPile { //class CP.java
      */
     public int count(int rowLength, String spec) {
 
-        System.out.println("It executed Count");
+        
         return 5;
     }//count
 
