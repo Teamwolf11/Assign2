@@ -1,30 +1,49 @@
 package week11;
 
-
 import java.lang.*;
 import java.util.Arrays;
 
-
 /**
- * Deal with It – COSC241 ASSIGNMENT
- *
+ * Deal with It – COSC241 ASSIGNMENT.
  * @author Mike Cui
  * @author Riya Alagh
- * Purpose of this assignment is to create a sorting program to sort cards given a respective specification
+ * Purpose of this assignment is to create a sorting program to sort cards given a respective specification.
  */
 
 public class CP implements CardPile { //class CP.java
 
+    /** initialise the (copy) array pile used to transform throughtout the program. */
     public int[] pile;
+    
+    /** initialise size, the num of cards given. */
     public int size;
+    
+    /** initialise the length of the row. */
     public int rowLength;
+    
+    /** initialise the 2D array for "placing" the cards in their initial row/column. */
     public int[][] placedCards;
+    
+    /** initialise string array of possible input specifications. */
     public String[] specification;
+    
+    /** initialise original array of cards. */
     public int[] originalCards;
+    
+    /** initialise number of rows. */
     public int numRows;
+    
+    /** initialise number of columns. */
     public int numCols;
 
-
+     /**
+     * Creates new CP class. 
+     * Operates testing (accepts from both stdin and command-line inputs).
+     * Runs through switch case and try..catch args.
+     * Takes command-line input arguments of either exactly two, or, three or more and outputs the respective answer from given specifications.
+     * Reads any stdin inputs and deals with respective arguments given.
+     * @param args - main method
+     */
     public static void main(String[] args) {
         CP card = new CP();
         switch (args.length) {
@@ -36,67 +55,58 @@ public class CP implements CardPile { //class CP.java
             case 2://2 command line args
 
                 card.size = Integer.parseInt(args[0]);
-
                 card.rowLength = Integer.parseInt(args[1]);
                 card.load(card.size);
 
-                if (card.size % card.rowLength != 0) {
-
+                if(card.size % card.rowLength != 0) {
                     try {
-
                         throw new CardPileException("Number given for size is not multiple of rowLength");
                     } catch (CardPileException e) {
                         System.err.println(e+": Number given for size is not multiple of rowLength");
                     }//end catch
                     break;
-                }else {
+                }else{
                     card.specification = new String[]{"TL", "BL", "TR", "BR", "LT", "LB", "RT", "RB"};
                     for (int counter =0; counter < 8; counter++) {
                         System.out.println(card.specification[counter] + " " + card.count(card.rowLength, card.specification[counter]));
                     }//end for
-                    
-                }//end else if
-
+                }//end else..if
                 break;
-            default://this will run when there is more than 3 arguments
+                
+            default://runs if there are more than 3 arguments in command-line input
                 card.size = Integer.parseInt(args[0]);
-                card.specification = new String[args.length - 2];//if there is 3 arguements, 3-2=1 so will for example add TL to the array.
+                card.specification = new String[args.length - 2]; //e.g: if there is 3 arguments, 3-2=1 so will add TL to the array.
                 System.arraycopy(args, 2, card.specification, 0, args.length - 2);
-
+                
                 card.rowLength = Integer.parseInt(args[1]);
                 card.load(card.size);
 
-                /**THIS WILL WRITE OUT ALL THE ARRAY THAT WAS ENTERED. We have to do this as it's what they did*/
+                //Prints out array before any transformations
                 int[] pileCopy = card.getPile();
-                for (int num : pileCopy) {//this will print out the array in one line
+                for (int num : pileCopy) { //this will print out the array in one line
                     System.out.print(num + " ");
-
                 }//end for
                 System.out.println();
-//                //---------------------------------------------------------------------------------------------------------------------------------
-//                // ---------------------------------------------------------------------------------------------------------------------------------
+              
+//---------------------------------------------------------------------------------------------------------------------------------               
+//---------------------------------------------------------------------------------------------------------------------------------
+                //Testing output/code for part 3, question (a):
 //                card.putDown(card.rowLength);
-//
 //                System.out.println(Arrays.deepToString(card.placedCards));
-//                //---------------------------------------------------------------------------------------------------------------------------------
-//                //---------------------------------------------------------------------------------------------------------------------------------
-//                    This is for testing Q3 part a
+//---------------------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------------------
 
                 for (int i = 0; i < args.length - 2; i++) {
-
-//--------------------------------------------------------------------------------------------------------------------------
                     if (card.size % card.rowLength != 0) {
-                        //all this stuff in between these lines are for exceptions for case 2
-                        try {/** THIS IS TO THROW THE EXCEPTION IF THE ROW LENGTH AND SIZE ARE BAD NUMBERS*/
-
+                        //all code in between these lines are for exceptions of case 2
+                        try { //to throw the expetion if the row length and size are incorrect input (bad numbers)
                             throw new CardPileException("Number given for size is not multiple of rowLength");
                         } catch (CardPileException e) {
                             System.err.println(e+": Number given for size is not multiple of rowLength");
-
                         }//end catch
                         break;
-
-                        /** THIS IS FOR IF THE SPEC IS WRONG*/
+                        
+                    //exception code for if specification input is incorrect (not one of the specific 8)
                     }else if(!(card.specification[i].equals("TL")||card.specification[i].equals("TR")||
                             card.specification[i].equals("BL")||card.specification[i].equals("BR")||
                             card.specification[i].equals("LT")||card.specification[i].equals("LB")
@@ -105,7 +115,6 @@ public class CP implements CardPile { //class CP.java
                             throw new CardPileException("You have not given one of the 8 specifications");
                         } catch (CardPileException e) {
                             System.err.println(e+": You have not given one of the 8 specifications");
-
                         }//end catch
                         break;
                     }//end else if
@@ -116,29 +125,22 @@ public class CP implements CardPile { //class CP.java
                     pileCopy = card.getPile();
                     for (int num : pileCopy) {//this will print out the array in one line
                         System.out.print(num + " ");
-
                     }//end for
                     System.out.println();
-//                    //---------------------------------------------------------------------------------------------------------------------------------
-//                    // ---------------------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------------------
+//                  //Testing output/code for part 3, question (a):
 //                   card.putDown(card.rowLength);
-//
-//                    System.out.println(Arrays.deepToString(card.placedCards));
-//                    //---------------------------------------------------------------------------------------------------------------------------------
-//                    //---------------------------------------------------------------------------------------------------------------------------------
-//                    This is for testing Q3 part a
-
-
-
+//                   System.out.println(Arrays.deepToString(card.placedCards));
+//---------------------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------------------
                 }//end for
-
         }//end switch
-
-
-    }//end main
+    }//end main method
 
     /**
      * Loads a copy of the given array as the pile of cards.
+     * @param originalCards is the int array for original card pile
      */
     public void load(int[] originalCards) {
         this.originalCards = originalCards;
@@ -148,6 +150,7 @@ public class CP implements CardPile { //class CP.java
 
     /**
      * Creates a pile of n cards numbered (top to bottom) from 1 to n.
+     * @param n 
      */
     public void load(int n) {
         size = n;
@@ -163,31 +166,28 @@ public class CP implements CardPile { //class CP.java
      * Returns a copy of the pile of cards.
      */
     public int[] getPile() {
-
         int[] copyArray = Arrays.copyOf(pile, size);
         return copyArray;
-
     }//end getPile
 
-
-
+    /**
+     * Takes 1D array and makes it a 2D array, "placing" the cards out.
+     * additional method makes testing simplier
+     * @param rowLength of array
+     */
     public void putDown(int rowLength) {
         int index = 0;
-
         numRows = size / rowLength;
         numCols = rowLength;
         placedCards = new int[numRows][numCols];
         for (int row = 0; row < numRows; row++) {//the number of rows is the size of whole array/rowLength
             for (int cols = 0; cols < numCols; cols++) {//Don't change this Mike. Draw the 2D array to prove it.
-                //                System.out.println(pile[index]);
-                //                System.out.println(row+" "+cols);
+                //System.out.println(pile[index]); //testing
+                //System.out.println(row+" "+cols); //testing
                 placedCards[row][cols] = pile[index];
-
-
                 index++;
             }//inner for
         }//outer for
-
     }//end putDown
 
     /**
@@ -195,6 +195,8 @@ public class CP implements CardPile { //class CP.java
      * for picking them up. See assignment details for required behaviour
      * if the number of cards is not a multiple of the given row length or
      * the specification is invalid.
+     * @param rowLength of array
+     * @param spec of wanted card pile transformation
      */
     public void transform(int rowLength, String spec) {
 
@@ -281,16 +283,15 @@ public class CP implements CardPile { //class CP.java
                 }//inner for
             }//outer for
         } //end else if FOR ALL THE SPECS
-
     }//end transform
-
 
     /**
      * Returns the minimum positive number of times we would need to call
      * transform(rowLength, spec) on the current pile and return it to its
      * original order.
-     *
-     * @return
+     * @param rowLength of array
+     * @param spec of wanted card pile transformation
+     * @return count of min amout of transformations to return to original state/order of cards
      */
     public int count(int rowLength, String spec) {
         int counter = 0;
@@ -300,8 +301,6 @@ public class CP implements CardPile { //class CP.java
         }while (!Arrays.equals(originalCards, pile));
         return counter;
     }//end method count
-
-
 
     private static class CardPileException extends Throwable {
         public CardPileException(String s) {
