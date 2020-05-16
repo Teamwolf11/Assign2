@@ -68,17 +68,28 @@ public class CP implements CardPile { //class CP.java
 
                 card.rowL = Integer.parseInt(args[1]);
                 card.load(card.size);
+                //-------------------------------------------------------------------------------------------------
+                /**THIS WILL WRITE OUT ALL THE ARRAY THAT WAS ENTERED. We have to do this as it's what they did*/
+                int[] pileCopy = card.getPile();
+                for (int num : pileCopy) {//this will print out the array in one line
+                    System.out.print(num + " ");
 
+                }//end for
+                System.out.println();
+                
                 for (int i = 0; i < args.length - 2; i++) {
                     if (card.size % card.rowL != 0) {
-
-                        try {
+//--------------------------------------------------------------------------------------------------------------------------
+                        //all this stuff in between these lines are for exceptions for case 2
+                        try {/** THIS IS TO THROW THE EXCEPTION IF THE ROW LENGTH AND SIZE ARE BAD NUMBERS*/
 
                             throw new CardPileException("Number given for size is not multiple of rowLength");
                         } catch (CardPileException e) {
                             System.err.println(e+": Number given for size is not multiple of rowLength");
                         break;
                         }//end catch
+                        
+                        /** THIS IS FOR IF THE SPEC IS WRONG*/
                     }else if(!(card.specification[i].equals("TL")||card.specification[i].equals("TR")||
                             card.specification[i].equals("BL")||card.specification[i].equals("BR")||
                             card.specification[i].equals("LT")||card.specification[i].equals("LB")
@@ -91,6 +102,7 @@ public class CP implements CardPile { //class CP.java
                         }//end catch
 
                     }//end else if
+                    //--------------------------------------------------------------------------------------------------------------------------
                     card.transform(card.rowL, card.specification[i]);
                     System.out.println("It has done the transform for " + card.rowL + " and " + card.specification[i]);
 
@@ -177,6 +189,7 @@ public class CP implements CardPile { //class CP.java
                     index++;
                 }//inner for
             }//outer for
+            //--------------------------------------------------------------------------------------------------------------------------
         } else if (spec.equals("TR")) {
             putDown(rowL);
             numRows = size / rowLength;
@@ -188,6 +201,7 @@ public class CP implements CardPile { //class CP.java
                     index++;
                 }//inner for
             }//outer for
+            //--------------------------------------------------------------------------------------------------------------------------
         } else if (spec.equals("BL")) {
             putDown(rowL);
             numRows = size / rowLength;
@@ -199,6 +213,7 @@ public class CP implements CardPile { //class CP.java
                     index++;
                 }//inner for
             }//outer for
+            //--------------------------------------------------------------------------------------------------------------------------
         } else if (spec.equals("BR")) {
             putDown(rowL);
             numRows = size / rowLength;
@@ -210,7 +225,7 @@ public class CP implements CardPile { //class CP.java
                     index++;
                 }//inner for
             }//outer for
-
+//--------------------------------------------------------------------------------------------------------------------------
         } else if (spec.equals("LT")) {
             putDown(rowL);
             numRows = size / rowLength;
@@ -223,7 +238,7 @@ public class CP implements CardPile { //class CP.java
                 }//inner for
             }//outer for
 
-
+//--------------------------------------------------------------------------------------------------------------------------
         } else if (spec.equals("RT")) {
             putDown(rowL);
             numRows = size / rowLength;
@@ -235,6 +250,7 @@ public class CP implements CardPile { //class CP.java
                     index++;
                 }//inner for
             }//outer for
+            //--------------------------------------------------------------------------------------------------------------------------
         } else if (spec.equals("LB")) {
             putDown(rowL);
             numRows = size / rowLength;
@@ -246,6 +262,7 @@ public class CP implements CardPile { //class CP.java
                     index++;
                 }//inner for
             }//outer for
+            //--------------------------------------------------------------------------------------------------------------------------
         } else if (spec.equals("RB")) {
             putDown(rowL);
             numRows = size / rowLength;
@@ -261,6 +278,7 @@ public class CP implements CardPile { //class CP.java
 
     }//end transform
 
+    
     /**
      * Returns the minimum positive number of times we would need to call
      * transform(rowLength, spec) on the current pile and return it to its
@@ -279,5 +297,5 @@ public class CP implements CardPile { //class CP.java
     private static class CardPileException extends Throwable {
         public CardPileException(String s) {
         }
-    }
+    }//end inner class
 }//end class
