@@ -39,9 +39,7 @@ public class CP implements CardPile { //class CP.java
 
                 card.rowLength = Integer.parseInt(args[1]);
                 card.load(card.size);
-                // System.out.println(card.getPile());
-                // String all="all";
-                // transform(this.rowL,all);
+
                 if (card.size % card.rowLength != 0) {
 
                     try {
@@ -53,10 +51,10 @@ public class CP implements CardPile { //class CP.java
                     break;
                 }else {
                     card.specification = new String[]{"TL", "BL", "TR", "BR", "LT", "LB", "RT", "RB"};
-                    for (int counter = 0; counter < 8; counter++) {
+                    for (int counter =0; counter < 8; counter++) {
                         System.out.println(card.specification[counter] + " " + card.count(card.rowLength, card.specification[counter]));
                     }//end for
-
+                    System.out.println(card.size+" "+ card.rowLength);
                 }//end else if
 
                 break;
@@ -75,6 +73,14 @@ public class CP implements CardPile { //class CP.java
 
                 }//end for
                 System.out.println();
+//                //---------------------------------------------------------------------------------------------------------------------------------
+//                // ---------------------------------------------------------------------------------------------------------------------------------
+//                card.putDown(card.rowLength);
+//
+//                System.out.println(Arrays.deepToString(card.placedCards));
+//                //---------------------------------------------------------------------------------------------------------------------------------
+//                //---------------------------------------------------------------------------------------------------------------------------------
+//                    This is for testing Q3 part a
 
                 for (int i = 0; i < args.length - 2; i++) {
 
@@ -89,6 +95,7 @@ public class CP implements CardPile { //class CP.java
 
                         }//end catch
                         break;
+
                         /** THIS IS FOR IF THE SPEC IS WRONG*/
                     }else if(!(card.specification[i].equals("TL")||card.specification[i].equals("TR")||
                             card.specification[i].equals("BL")||card.specification[i].equals("BR")||
@@ -104,7 +111,7 @@ public class CP implements CardPile { //class CP.java
                     }//end else if
  //--------------------------------------------------------------------------------------------------------------------------
                     card.transform(card.rowLength, card.specification[i]);
-                    System.out.println("It has done the transform for " + card.rowLength + " and " + card.specification[i]);
+                    //System.out.println("SIZE IS: "+card.size+"\t ROW LENGTH IS: " + card.rowLength + "\t SPEC IS: " + card.specification[i]);
 
                     pileCopy = card.getPile();
                     for (int num : pileCopy) {//this will print out the array in one line
@@ -112,7 +119,19 @@ public class CP implements CardPile { //class CP.java
 
                     }//end for
                     System.out.println();
+//                    //---------------------------------------------------------------------------------------------------------------------------------
+//                    // ---------------------------------------------------------------------------------------------------------------------------------
+//                   card.putDown(card.rowLength);
+//
+//                    System.out.println(Arrays.deepToString(card.placedCards));
+//                    //---------------------------------------------------------------------------------------------------------------------------------
+//                    //---------------------------------------------------------------------------------------------------------------------------------
+//                    This is for testing Q3 part a
+
+
+
                 }//end for
+
         }//end switch
 
 
@@ -150,6 +169,8 @@ public class CP implements CardPile { //class CP.java
 
     }//end getPile
 
+
+
     public void putDown(int rowLength) {
         int index = 0;
 
@@ -185,9 +206,14 @@ public class CP implements CardPile { //class CP.java
         if (spec.equals("TL")) {
 
             for (int cols=0; cols<numCols; cols++) {
+
+//                System.out.println("Col: "+ cols+"index: "+index);
                 for (int row = 0; row < numRows; row++) {
+
+//                    System.out.println("Row: "+row+"Col: "+ cols+"index: "+index);
                     pile[index] = placedCards[row][cols];
                     index++;
+//                    System.out.println("Row: "+row+"Col: "+ cols+"index: "+index+"It has inputed pile");
                 }//inner for
             }//outer for
 //--------------------------------------------------------------------------------------------------------------------------
@@ -267,13 +293,13 @@ public class CP implements CardPile { //class CP.java
      * @return
      */
     public int count(int rowLength, String spec) {
-int counter = 0;
-do {
-transform(3,spec);//spec is from the method arguments, basically what got passed to the method.
-counter++;
-}while (!Arrays.equals(originalCards, pile));
+        int counter = 0;
+        do {
+        transform(rowLength,spec);//spec is from the method arguments, basically what got passed to the method.
+        counter++;
+        }while (!Arrays.equals(originalCards, pile));
         return counter;
-    }//count
+    }//end method count
 
 
 
