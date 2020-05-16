@@ -1,5 +1,6 @@
-public interface CardPile {
+package week11;
 
+public interface CardPile{
   /*
      Loads a copy of the given array as the pile of cards.   
   */
@@ -30,5 +31,4 @@ public interface CardPile {
   */
   public int count(int rowLength, String spec);
   
-   
-}
+}//end CardPile

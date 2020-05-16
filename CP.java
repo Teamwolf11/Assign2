@@ -1,126 +1,315 @@
 package week11;
 
-/**
-* Deal with It – COSC241 ASSIGNMENT
-* @author Mike Cui
-* @author Riya Alagh
-* Purpose of this assignment is to create a sorting program to sort cards given a respective specification
-*/
-
 import java.lang.*;
-import java.util.*;
+import java.util.Arrays;
 
-public class CP implements CardPile{
-  
-  public static int [] pile;
-  public static int size;
-  public static int rowL;
-  public static int [] array1;
+/**
+ * Deal with It – COSC241 ASSIGNMENT.
+ * @author Mike Cui
+ * @author Riya Alagh
+ * Purpose of this assignment is to create a sorting program to sort cards given a respective specification.
+ */
 
-  public static void main (String  [] args){
+public class CP implements CardPile { //class CP.java
+
+    /** initialise the (copy) array pile used to transform throughtout the program. */
+    public int[] pile;
     
-     switch (args.length) {
-      case 0: //0 command line args
-       // inputHellos(); break;
-      case 1://1 command line args
-        //randomHellos(args[0], 1); break;
-      case 2://2 command line args
-        this.size=args[0];
-         this.rowL=args[1];
-         load(this.size);
-         System.out.println(getPile());
-       // String all="all";
-        // transform(this.rowL,all);
-          
-          break;
-      default:
-        System.out.println("Incorrect number of arguments");    
-    }
+    /** initialise size, the num of cards given. */
+    public int size;
     
+    /** initialise the length of the row. */
+    public int rowLength;
     
-  }//end main
-  
-   /**
-     Loads a copy of the given array as the pile of cards.   
-  */
-  public void load(int[] cards){
+    /** initialise the 2D array for "placing" the cards in their initial row/column. */
+    public int[][] placedCards;
     
-  }//end load 
-  
-  /**
-     Creates a pile of n cards numbered (top to bottom) from 1 to n.    
-  */
-  public void load(int n){
-    this.size=n;
-    array1=new int [size];
-    for (int counter=0,counter<size;counter++){
-      array1[counter] = counter+1;
-    }//end for loop //this initialises the array with size n
+    /** initialise string array of possible input specifications. */
+    public String[] specification;
     
-    pile= Arrays.copyOf(array1,size);    
-  }//end load
-  
-  /**
-     Returns a copy of the pile of cards.
-  */
-  public int[] getPile(){
+    /** initialise original array of cards. */
+    public int[] originalCards;
     
-    int [] badPile= Arrays.copyOf(pile,size);
-    return badPile;
+    /** initialise number of rows. */
+    public int numRows;
     
-  }//end getPile
-  
-  /**
-     Transforms the pile of cards given a row length and a specification
-     for picking them up. See assignment details for required behaviour
-     if the number of cards is not a multiple of the given row length or
-     the specification is invalid.
-  */   
-  public void transform(int rowLength, String spec){
-        if (spec.equals("TL")){                                                                                    
-            topLeft();                                                                                           
-        }else if (spec.equals("all"){                                                                              
-        }else if (spec.equals("TR"){ 
-            topRight(); 
-        }else if(spec.equals("all"){                                                                           
-        }else if (spec.equals("BL"){
-            bottomLeft();
-        }else if(spec.equals("all"){                                                                   
-        }else if (spec.equals("BR"){
-            bottomRight();
-        }else if(spec.equals("all"){                                                           
-        }else if (spec.equals("LT"){
-            leftTop();
-        }else if(spec.equals("all"){                                                   
-        }else if (spec.equals("RT"){
-            rightTop();
-        }else if(spec.equals("all"){                                           
-        }else if (spec.equals("LB"){
-            leftBottom();
-        }else if(spec.equals("all"){                                   
-        }else if (spec.equals("RB"){ 
-            rightBottom();
-        }else(specs.equals("all")
+    /** initialise number of columns. */
+    public int numCols;
+
+     /**
+     * Creates new CP class. 
+     * Operates testing (accepts from both stdin and command-line inputs).
+     * Runs through switch case and try..catch args.
+     * Takes command-line input arguments of either exactly two, or, three or more and outputs the respective answer from given specifications.
+     * Reads any stdin inputs and deals with respective arguments given.
+     * @param args - main method
+     */
+    public static void main(String[] args) {
+        CP card = new CP();
+        switch (args.length) {
+            case 0:
+                System.out.println("This is for stdin, We just haven't codedd it yet. But once we do it will be put in here.");
+                break;
+            case 1:
+                System.out.println("You need to enter the args as size of row then row length then (optional) more spec, you have entered just one number");
+            case 2://2 command line args
+
+                card.size = Integer.parseInt(args[0]);
+                card.rowLength = Integer.parseInt(args[1]);
+                card.load(card.size);
+
+                if(card.size % card.rowLength != 0) {
+                    try {
+                        throw new CardPileException("Number given for size is not multiple of rowLength");
+                    } catch (CardPileException e) {
+                        System.err.println(e+": Number given for size is not multiple of rowLength");
+                    }//end catch
+                    break;
+                }else{
+                    card.specification = new String[]{"TL", "BL", "TR", "BR", "LT", "LB", "RT", "RB"};
+                    for (int counter =0; counter < 8; counter++) {
+                        System.out.println(card.specification[counter] + " " + card.count(card.rowLength, card.specification[counter]));
+                    }//end for
+                }//end else..if
+                break;
+                
+            default://runs if there are more than 3 arguments in command-line input
+                card.size = Integer.parseInt(args[0]);
+                card.specification = new String[args.length - 2]; //e.g: if there is 3 arguments, 3-2=1 so will add TL to the array.
+                System.arraycopy(args, 2, card.specification, 0, args.length - 2);
+                
+                card.rowLength = Integer.parseInt(args[1]);
+                card.load(card.size);
+
+                //Prints out array before any transformations
+                int[] pileCopy = card.getPile();
+                for (int num : pileCopy) { //this will print out the array in one line
+                    System.out.print(num + " ");
+                }//end for
+                System.out.println();
               
-      }//end transform                                                                  
-                                                              
-    }
-    
-  }//end transform
-  
-  /**
-     Returns the minimum positive number of times we would need to call
-     transform(rowLength, spec) on the current pile and return it to its
-     original order.
-     
-     @return 
-  */
-  public int count(int rowLength, String spec){
-    
-    
-  }//count
+//---------------------------------------------------------------------------------------------------------------------------------               
+//---------------------------------------------------------------------------------------------------------------------------------
+                //Testing output/code for part 3, question (a):
+//                card.putDown(card.rowLength);
+//                System.out.println(Arrays.deepToString(card.placedCards));
+//---------------------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------------------
 
+                for (int i = 0; i < args.length - 2; i++) {
+                    if (card.size % card.rowLength != 0) {
+                        //all code in between these lines are for exceptions of case 2
+                        try { //to throw the expetion if the row length and size are incorrect input (bad numbers)
+                            throw new CardPileException("Number given for size is not multiple of rowLength");
+                        } catch (CardPileException e) {
+                            System.err.println(e+": Number given for size is not multiple of rowLength");
+                        }//end catch
+                        break;
+                        
+                    //exception code for if specification input is incorrect (not one of the specific 8)
+                    }else if(!(card.specification[i].equals("TL")||card.specification[i].equals("TR")||
+                            card.specification[i].equals("BL")||card.specification[i].equals("BR")||
+                            card.specification[i].equals("LT")||card.specification[i].equals("LB")
+                    ||card.specification[i].equals("RT")||card.specification[i].equals("RB"))){
+                        try {
+                            throw new CardPileException("You have not given one of the 8 specifications");
+                        } catch (CardPileException e) {
+                            System.err.println(e+": You have not given one of the 8 specifications");
+                        }//end catch
+                        break;
+                    }//end else if
+                    
+ //--------------------------------------------------------------------------------------------------------------------------
+                   
+                    card.transform(card.rowLength, card.specification[i]);
+                    //System.out.println("SIZE IS: "+card.size+"\t ROW LENGTH IS: " + card.rowLength + "\t SPEC IS: " + card.specification[i]);
 
+                    pileCopy = card.getPile();
+                    for (int num : pileCopy) {//this will print out the array in one line
+                        System.out.print(num + " ");
+                    }//end for
+                    System.out.println();
+                    
+//---------------------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------------------
+//                  //Testing output/code for part 3, question (a):
+//                   card.putDown(card.rowLength);
+//                   System.out.println(Arrays.deepToString(card.placedCards));
+//---------------------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------------------
+                }//end for
+        }//end switch
+    }//end main method
+
+    /**
+     * Loads a copy of the given array as the pile of cards.
+     * @param originalCards is the int array for original card pile
+     */
+    public void load(int[] originalCards) {
+        this.originalCards = originalCards;
+        pile = Arrays.copyOf(originalCards, originalCards.length);
+        size = pile.length;
+    }//end load
+
+    /**
+     * Creates a pile of n cards numbered (top to bottom) from 1 to n.
+     * @param n 
+     */
+    public void load(int n) {
+        size = n;
+        originalCards = new int[size];
+        for (int counter = 0; counter < size; counter++) {
+            originalCards[counter] = counter + 1;
+        }//end for loop //this initialises the array with size n
+
+        pile = Arrays.copyOf(originalCards, size);
+    }//end load
+
+    /**
+     * Returns a copy of the pile of cards.
+     */
+    public int[] getPile() {
+        int[] copyArray = Arrays.copyOf(pile, size);
+        return copyArray;
+    }//end getPile
+
+    /**
+     * Takes 1D array and makes it a 2D array, "placing" the cards out.
+     * additional method makes testing simplier
+     * @param rowLength of array
+     */
+    public void putDown(int rowLength) {
+        int index = 0;
+        numRows = size / rowLength;
+        numCols = rowLength;
+        placedCards = new int[numRows][numCols];
+        for (int row = 0; row < numRows; row++) {//the number of rows is the size of whole array/rowLength
+            for (int cols = 0; cols < numCols; cols++) {//Don't change this Mike. Draw the 2D array to prove it.
+                //System.out.println(pile[index]); //testing
+                //System.out.println(row+" "+cols); //testing
+                placedCards[row][cols] = pile[index];
+                index++;
+            }//inner for
+        }//outer for
+    }//end putDown
+
+    /**
+     * Transforms the pile of cards given a row length and a specification
+     * for picking them up. See assignment details for required behaviour
+     * if the number of cards is not a multiple of the given row length or
+     * the specification is invalid.
+     * @param rowLength of array
+     * @param spec of wanted card pile transformation
+     */
+    public void transform(int rowLength, String spec) {
+
+        putDown(this.rowLength);
+        numRows = size / rowLength;
+        numCols = rowLength;
+        int index = 0;
+
+        if (spec.equals("TL")) {
+
+            for (int cols=0; cols<numCols; cols++) {
+
+//                System.out.println("Col: "+ cols+"index: "+index);
+                for (int row = 0; row < numRows; row++) {
+
+//                    System.out.println("Row: "+row+"Col: "+ cols+"index: "+index);
+                    pile[index] = placedCards[row][cols];
+                    index++;
+//                    System.out.println("Row: "+row+"Col: "+ cols+"index: "+index+"It has inputed pile");
+                }//inner for
+            }//outer for
+//--------------------------------------------------------------------------------------------------------------------------
+        } else if (spec.equals("TR")) { //top right transformation
+
+            for (int cols=numCols-1; cols>=0; cols--) {
+                for (int row = 0; row < numRows; row++) {
+                    pile[index] = placedCards[row][cols];
+                    index++;
+                }//inner for
+            }//outer for
+//--------------------------------------------------------------------------------------------------------------------------
+        } else if (spec.equals("BL")) { //bottom left transformation
+
+            for (int cols=0; cols<numCols; cols++) {
+                for (int row =numRows-1; row >=0; row--) {
+                    pile[index] = placedCards[row][cols];
+                    index++;
+                }//inner for
+            }//outer for
+//--------------------------------------------------------------------------------------------------------------------------
+        } else if (spec.equals("BR")) { //bottom right transformation
+
+            for (int cols=numCols-1; cols>=0; cols--) {
+                for (int row =numRows-1; row >=0; row--) {
+                    pile[index] = placedCards[row][cols];
+                    index++;
+                }//inner for
+            }//outer for
+//--------------------------------------------------------------------------------------------------------------------------
+        } else if (spec.equals("LT")) { //left top transformation
+
+            for (int row = 0; row < numRows; row++) {
+                for (int cols = 0; cols < numCols; cols++) {
+                    pile[index] = placedCards[row][cols];
+                    index++;
+                }//inner for
+            }//outer for
+
+//--------------------------------------------------------------------------------------------------------------------------
+        } else if (spec.equals("RT")) { //right top transformation
+
+            for (int row = 0; row < numRows; row++) {
+                for (int cols=numCols-1; cols>=0; cols--) {
+                    pile[index] = placedCards[row][cols];
+                    index++;
+                }//inner for
+            }//outer for
+            //--------------------------------------------------------------------------------------------------------------------------
+        } else if (spec.equals("LB")) { //left bottom transformation
+
+            for (int row =numRows-1; row >=0; row--) {
+                for (int cols = 0; cols < numCols; cols++) {
+                    pile[index] = placedCards[row][cols];
+                    index++;
+                }//inner for
+            }//outer for
+            //--------------------------------------------------------------------------------------------------------------------------
+        } else if (spec.equals("RB")) { //right bottom transformation
+
+            for (int row =numRows-1; row >=0; row--) {
+                for (int cols=numCols-1; cols>=0; cols--) {
+                    pile[index] = placedCards[row][cols];
+                    index++;
+                }//inner for
+            }//outer for
+        } //end else if FOR ALL THE SPECS
+    }//end transform
+
+    /**
+     * Returns the minimum positive number of times we would need to call
+     * transform(rowLength, spec) on the current pile and return it to its
+     * original order.
+     * @param rowLength of array
+     * @param spec of wanted card pile transformation
+     * @return count of min amout of transformations to return to original state/order of cards
+     */
+    public int count(int rowLength, String spec) {
+        int counter = 0;
+        do {
+            transform(rowLength,spec);//spec is from the method arguments, basically what got passed to the method.
+            counter++;
+        }while (!Arrays.equals(originalCards, pile));
+        return counter;
+    }//end method count
+
+    /**
+    * 
+    */
+    private static class CardPileException extends Throwable {
+        public CardPileException(String s) {
+        }
+    }//end inner class
 }//end class
-
-
