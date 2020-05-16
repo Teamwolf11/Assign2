@@ -167,7 +167,16 @@ public class CP implements CardPile { //class CP.java
 
 
         if (spec.equals("TL")) {
-            System.out.println("It executed TL");
+            putDown(rowL);
+            numRows = size / rowLength;
+            numCols = rowLength;
+            int index = 0;
+            for (int cols = 0; cols < numCols; cols++) {
+                for (int row = 0; row < numRows; row++) {
+                    pile[index] = placedCards[row][cols];
+                    index++;
+                }//inner for
+            }//outer for
         } else if (spec.equals("TR")) {
 
         } else if (spec.equals("BL")) {
