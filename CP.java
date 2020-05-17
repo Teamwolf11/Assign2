@@ -2,7 +2,9 @@ package week11;
 
 import java.io.*;
 import java.lang.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
 
 /**
  * Deal with It – COSC241 ASSIGNMENT.
@@ -11,7 +13,8 @@ import java.util.Arrays;
  * Purpose of this assignment is to create a sorting program to sort cards given a respective specification.
  */
 
-public class CP implements CardPile { //class CP.java
+public class CP implements CardPile {
+
 
     /** initialise the (copy) array pile used to transform throughtout the program. */
     public int[] pile;
@@ -39,6 +42,12 @@ public class CP implements CardPile { //class CP.java
 
     public String message;
 
+    int[] pileCopy;
+
+    public String spec;
+
+   private static final int magicNumber=50;
+
     /**
      * Creates new CP class.
      * Operates testing (accepts from both stdin and command-line inputs).
@@ -51,10 +60,82 @@ public class CP implements CardPile { //class CP.java
         CP card = new CP();
         switch (args.length) {
             case 0:
-                System.out.println("This is for stdin, We just haven't coded it yet. But once we do it will be put in here.");
+//this is for stdin
+                Scanner scan = new Scanner(System.in);
+
+                //ArrayList <String> input= new ArrayList<String>();
+
+                while (scan.hasNextLine()) {
+
+                        String input = scan.nextLine();
+                        Scanner sc = new Scanner(input);
+                        switch (sc.next()) {
+                            case "c":
+                                card.rowLength =Integer.parseInt(sc.next());
+                                card.spec =sc.next();
+                                 System.out.println(card.count(card.rowLength, card.spec));
+                                break;
+                            case "l":
+                                card.size = Integer.parseInt(sc.next());
+                                card.load(card.size);
+//                                Arrays.toString(card.pile);
+                                break;
+                            case"L":
+                                int i=0;
+                                card.originalCards=new int [magicNumber];
+                                while(sc.hasNextInt()) {
+                                    card.originalCards[i++]=sc.nextInt();
+
+                                }//end while
+                                card.size=card.originalCards.length;
+                                card.load(card.originalCards);
+                                break;
+                            case "p":
+
+                                card.pileCopy = card.getPile();
+                                for (int num : card.pileCopy) { //this will print out the array in one line
+                                    System.out.print(num + " ");
+                                }//end for
+                                System.out.println();
+
+                                break;
+
+                            case "P":
+                                card.rowLength=sc.nextInt();
+                                int index = 0;
+                                card.numRows = card.size / rowLength;
+                                numCols = rowLength;
+                                placedCards = new int[numRows][numCols];
+                                for (int row = 0; row < numRows; row++) {//the number of rows is the size of whole array/rowLength
+                                    for (int cols = 0; cols < numCols; cols++) {//Don't change this Mike. Draw the 2D array to prove it.
+                                        //System.out.println(pile[index]); //testing
+                                        //System.out.println(row+" "+cols); //testing
+                                        placedCards[row][cols] = pile[index];
+                                        index++;
+                                    }//inner for
+                                }//outer for
+
+
+                                break;
+
+
+
+                        }//end switchh
+
+                }
+
+
+
                 break;
             case 1:
-                System.out.println("You have entered only one number; Args needs to be entered as size of row, then row length, then (optional) further specifications.");
+//                card.size=Integer.parseInt(args[0]);
+//                card.load(card.size);
+//                //this is for 3c
+//            card.transform(3,);
+//Arrays.equals(card.pile, card.originalCards);
+//                    }
+//                }
+//
                 break;
             case 2://2 command line args
 
@@ -118,8 +199,8 @@ public class CP implements CardPile { //class CP.java
                 }//end for
                 if (card.message==null) {
                     //Prints out array before any transformations
-                    int[] pileCopy = card.getPile();
-                    for (int num : pileCopy) { //this will print out the array in one line
+                    card.pileCopy = card.getPile();
+                    for (int num : card.pileCopy) { //this will print out the array in one line
                         System.out.print(num + " ");
                     }//end for
                     System.out.println();
@@ -136,8 +217,8 @@ public class CP implements CardPile { //class CP.java
                         card.transform(card.rowLength, card.specification[i]);
                         //System.out.println("SIZE IS: "+card.size+"\t ROW LENGTH IS: " + card.rowLength + "\t SPEC IS: " + card.specification[i]);
 
-                        pileCopy = card.getPile();
-                        for (int num : pileCopy) {//this will print out the array in one line
+                        card.pileCopy = card.getPile();
+                        for (int num : card.pileCopy) {//this will print out the array in one line
                             System.out.print(num + " ");
                         }//end for
                         System.out.println();
@@ -317,6 +398,14 @@ public class CP implements CardPile { //class CP.java
         }while (!Arrays.equals(originalCards, pile));
         return counter;
     }//end method count
+
+    public int accessible(){
+
+
+return 6;
+    }//end method
+
+
 
     /**
      *
