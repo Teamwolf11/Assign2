@@ -50,10 +50,10 @@ public class CP implements CardPile { //class CP.java
         CP card = new CP();
         switch (args.length) {
             case 0:
-                System.out.println("This is for stdin, We just haven't codedd it yet. But once we do it will be put in here.");
+                System.out.println("This is for stdin, We just haven't coded it yet. But once we do it will be put in here.");
                 break;
             case 1:
-                System.out.println("You need to enter the args as size of row then row length then (optional) more spec, you have entered just one number");
+                System.out.println("You have entered only one number; Args needs to be entered as size of row, then row length, then (optional) further specifications.");
                 break;
             case 2://2 command line args
 
@@ -62,14 +62,12 @@ public class CP implements CardPile { //class CP.java
                 card.load(card.size);
 
                 try { //to throw the exception if the row length and size are incorrect input (bad numbers)
-
                     if (card.size % card.rowLength != 0) {
-                        card.message = "Number given for size is not multiple of rowLength ";
+                        card.message = "Number given for pile size is not multiple of the rowLength.";
                         throw new CardPileException(card.message);
-
                     }
 
-                } catch (CardPileException e) {
+                }catch (CardPileException e) {
                     System.err.println(e);
                     break;
                 }//end catch
@@ -81,7 +79,7 @@ public class CP implements CardPile { //class CP.java
                 }//end if card.message==null
                 break;
 
-            default://runs if there are more than 3 arguments in command-line input
+            default: //runs if there are more than 3 arguments in command-line input
                 card.size = Integer.parseInt(args[0]);
                 card.specification = new String[args.length - 2]; //e.g: if there is 3 arguments, 3-2=1 so will add TL to the array.
                 System.arraycopy(args, 2, card.specification, 0, args.length - 2);
@@ -89,13 +87,12 @@ public class CP implements CardPile { //class CP.java
                 card.rowLength = Integer.parseInt(args[1]);
                 card.load(card.size);
                 for (int i = 0; i < args.length - 2; i++) {
-
                         //all code in between these lines are for exceptions of case 2
 
                         try { //to throw the exception if the row length and size are incorrect input (bad numbers)
 
                             if (card.size % card.rowLength != 0) {
-                                card.message = "Number given for size is not multiple of rowLength ";
+                                card.message = "Number given for pile size is not multiple of the rowLength.";
                                 throw new CardPileException(card.message);
                             }
 
@@ -103,17 +100,14 @@ public class CP implements CardPile { //class CP.java
                             System.err.println(e);
                             break;
                         }//end catch
-
-
-                        //exception code for if specification input is incorrect (not one of the specific 8)
-
-                        try {
+                    
+                        try { //exception code for if specification input is incorrect (not one of the specific 8)
 
                         if (!(card.specification[i].equals("TL") || card.specification[i].equals("TR") ||
                             card.specification[i].equals("BL") || card.specification[i].equals("BR") ||
                             card.specification[i].equals("LT") || card.specification[i].equals("LB")
                             || card.specification[i].equals("RT") || card.specification[i].equals("RB"))) {
-                            card.message = "You have not given one of the 8 specifications ";
+                            card.message = "Please enter one of the correct 8 specifications. They are TL, BL, TR, BR, LT, LB, RT, RB.";
                             throw new CardPileException(card.message);
                         }
                         } catch (CardPileException e) {
@@ -138,10 +132,6 @@ public class CP implements CardPile { //class CP.java
 //---------------------------------------------------------------------------------------------------------------------------------
 
                     for (int i = 0; i < args.length - 2; i++) {
-
-
-                        //--------------------------------------------------------------------------------------------------------------------------
-
                         card.transform(card.rowLength, card.specification[i]);
                         //System.out.println("SIZE IS: "+card.size+"\t ROW LENGTH IS: " + card.rowLength + "\t SPEC IS: " + card.specification[i]);
 
@@ -150,7 +140,7 @@ public class CP implements CardPile { //class CP.java
                             System.out.print(num + " ");
                         }//end for
                         System.out.println();
-
+                        
 //---------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------
 //                  //Testing output/code for part 3, question (a):
