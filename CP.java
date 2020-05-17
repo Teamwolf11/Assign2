@@ -49,7 +49,7 @@ public class CP implements CardPile {
 
     /** initialise magic number to avoid error.*/
     private static final int magicNumber = 50;
-    
+
     public int [] [] placedCardscopy;
 
     /**
@@ -71,87 +71,91 @@ public class CP implements CardPile {
 
                 while (scan.hasNextLine()) {
 
-                        String input = scan.nextLine();
-                        Scanner sc = new Scanner(input);
-                        switch (sc.next()) {
-                            case "c":
-                                card.rowLength = Integer.parseInt(sc.next());
-                                card.spec = sc.next();
-                                System.out.println(card.count(card.rowLength, card.spec));
-                                break;
-                            case "l":
-                                card.size = Integer.parseInt(sc.next());
-                                card.load(card.size);
+                    String input = scan.nextLine();
+                    Scanner sc = new Scanner(input);
+                    switch (sc.next()) {
+                        case "c":
+                            card.rowLength = Integer.parseInt(sc.next());
+                            card.spec = sc.next();
+                            System.out.println(card.count(card.rowLength, card.spec));
+                            break;
+                        case "l":
+                            card.size = Integer.parseInt(sc.next());
+                            card.load(card.size);
 //                                Arrays.toString(card.pile);
-                                break;
-                            case "L":
+                            break;
+                        case "L":
 
-                                int counter = 0;
-                                int [] orgCards1=new int [input.length()];
-                                while (sc.hasNextInt()) {
-                                    orgCards1[counter++]=(sc.nextInt());
+                            int counter = 0;
+                            int [] orgCards1=new int [input.length()];
+                            while (sc.hasNextInt()) {
+                                orgCards1[counter++]=(sc.nextInt());
+                            }//end while
+                            int countOfInt=0;
+
+                            for (int u =0;u<orgCards1.length;u++) {
+
+                                if(orgCards1[u]!=0){
+
+                                    countOfInt++;
                                 }//end while
-                                int countOfInt=0;
 
-                               for (int u =0;u<orgCards1.length;u++) {
+                            }//end for
 
-                                   if(orgCards1[u]!=0){
+                            card.originalCards=new int [countOfInt];
 
-                                       countOfInt++;
-                               }//end while
-
-                               }//end for
-
-                                card.originalCards=new int [countOfInt];
-
-                                for(int u=0;u<countOfInt;u++){
-                                    card.originalCards[u]=orgCards1[u];
-                                }//end for
+                            for(int u=0;u<countOfInt;u++){
+                                card.originalCards[u]=orgCards1[u];
+                            }//end for
 //-------------------------------------------------------------------------------------------------
 
-                                for (int num :card.originalCards) { //this will print out the array in one line
-                                    System.out.print(num + " ");
-                                }//end for
-                                System.out.println();
- //------------------------------------------------------------------------------
+                            for (int num :card.originalCards) { //this will print out the array in one line
+                                System.out.print(num + " ");
+                            }//end for
+                            System.out.println();
+                            //------------------------------------------------------------------------------
 
 
 
-                                card.size=card.originalCards.length;
-                                card.load(card.originalCards);
-                                break;
-                            case "p":
+                            card.size=card.originalCards.length;
+                            card.load(card.originalCards);
+                            break;
+                        case "p":
 
-                                card.pileCopy = Arrays.copyOf(card.pile, card.size);
-                                for (int num : card.pileCopy) { //this will print out the array in one line
-                                    System.out.print(num + " ");
-                                }//end for
-                                System.out.println();
+                            card.pileCopy = Arrays.copyOf(card.pile, card.size);
+                            for (int num : card.pileCopy) { //this will print out the array in one line
+                                System.out.print(num + " ");
+                            }//end for
+                            System.out.println();
 
-                                break;
+                            break;
 
-                            case "P":
-                                card.rowLength=sc.nextInt();
-                                card.putDown(card.rowLength);
-                                card.placedCardscopy=Arrays.copyOf(card.placedCards,card.placedCards.length);
+                        case "P":
+                            card.rowLength=sc.nextInt();
+                            card.putDown(card.rowLength);
+                            card.placedCardscopy=Arrays.copyOf(card.placedCards,card.placedCards.length);
 //                                card.numRows = card.size / card.rowLength;
 //                                card.numCols = card.rowLength;
-                                for(int i = 0; i<card.numRows; i++)
+                            for(int i = 0; i<card.numRows; i++)
+                            {
+                                for(int j = 0; j<card.numCols; j++)
                                 {
-                                    for(int j = 0; j<card.numCols; j++)
-                                    {
-                                        System.out.print(card.placedCardscopy[i][j]+" ");
-                                    }
-                                    System.out.println();
+                                    System.out.print(card.placedCardscopy[i][j]+" ");
                                 }
+                                System.out.println();
+                            }
 
 
-                                break;
+                            break;
+                        case "t":
+                            card.rowLength=sc.nextInt();
+                            card.spec=sc.next();
 
+                            card.transform(card.rowLength,card.spec);
 
-                            default:
+                        default:
 
-                        }//end switchh
+                    }//end switchh
 
                 }
 
@@ -167,7 +171,7 @@ public class CP implements CardPile {
 //                    }
 //                }
                 break;
-                
+
             case 2://2 command line args
                 card.size = Integer.parseInt(args[0]);
                 card.rowLength = Integer.parseInt(args[1]);
@@ -320,12 +324,12 @@ public class CP implements CardPile {
 
         if (spec.equals("TL")) {
             for (int cols=0; cols<numCols; cols++) {
-              //System.out.println("Col: "+ cols+"index: "+index);
+                //System.out.println("Col: "+ cols+"index: "+index);
                 for (int row = 0; row < numRows; row++) {
-                   //System.out.println("Row: "+row+"Col: "+ cols+"index: "+index);
+                    //System.out.println("Row: "+row+"Col: "+ cols+"index: "+index);
                     pile[index] = placedCards[row][cols];
                     index++;
-                   //System.out.println("Row: "+row+"Col: "+ cols+"index: "+index+"It has inputed pile");
+                    //System.out.println("Row: "+row+"Col: "+ cols+"index: "+index+"It has inputed pile");
                 }//inner for
             }//outer for
 //--------------------------------------------------------------------------------------------------------------------------
@@ -368,7 +372,7 @@ public class CP implements CardPile {
                     index++;
                 }//inner for
             }//outer for
- //--------------------------------------------------------------------------------------------------------------------------
+            //--------------------------------------------------------------------------------------------------------------------------
         } else if (spec.equals("LB")) { //left bottom transformation
             for (int row =numRows-1; row >=0; row--) {
                 for (int cols = 0; cols < numCols; cols++) {
@@ -419,5 +423,5 @@ public class CP implements CardPile {
             System.out.print(s);
         }//end constructor
     }//end inner class
-    
+
 }//end class
