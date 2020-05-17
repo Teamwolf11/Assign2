@@ -386,6 +386,7 @@ public class CP implements CardPile {
         public static final long serialVersionUID = 1234545;
          /**
          * CardPileException construstor.
+         * @param s - string
          */
         public CardPileException(String s){
             System.out.print(s);
