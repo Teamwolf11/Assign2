@@ -50,6 +50,7 @@ public class CP implements CardPile {
     /** initialise magic number to avoid error.*/
     private static final int magicNumber = 50;
 
+    /** initialise a COPY of the 2D array for "placing" the cards in their initial row/column.*/
     public int [] [] placedCardscopy;
 
     /**
