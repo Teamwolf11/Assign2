@@ -2,7 +2,7 @@ package week11;
 
 import java.io.*;
 import java.lang.*;
-import java.util.ArrayList;
+//import java.util.ArrayList; //checkstyle says this is an unused import
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -10,58 +10,58 @@ import java.util.Scanner;
  * Deal with It – COSC241 ASSIGNMENT.
  * @author Mike Cui
  * @author Riya Alagh
- * Purpose of this assignment is to create a sorting program to sort cards given a respective specification.
+ * Sorting program that sorts(transforms) cards given a respective specification.
  */
 public class CP implements CardPile {
 
-    /** initialise the (copy) array pile used to transform throughtout the program.*/
+    /**initialise (copy) array pile used to transform throughtout program.*/
     public int[] pile;
 
-    /** initialise size, the num of cards given.*/
+    /**initialise size, the num of cards given.*/
     public int size;
 
-    /** initialise the length of the row.*/
+    /**initialise the length of the row.*/
     public int rowLength;
 
-    /** initialise the 2D array for "placing" the cards in their initial row/column.*/
+    /**initialise 2D array for "placing" cards in initial row/column.*/
     public int[][] placedCards;
 
-    /** initialise string array of possible input specifications.*/
+    /**initialise string array of possible input specifications.*/
     public String[] specification;
 
-    /** initialise original array of cards.*/
+    /**initialise original array of cards.*/
     public int[] originalCards;
 
-    /** initialise number of rows.*/
+    /**initialise number of rows.*/
     public int numRows;
 
-    /** initialise number of columns.*/
+    /**initialise number of columns.*/
     public int numCols;
 
-    /** initialise error exceptions message.*/
+    /**initialise error exceptions message.*/
     public String message;
 
-    /** initialise pileCopy as a copy of our originalCards array.*/
+    /**initialise pileCopy as a copy of our originalCards array.*/
     public int[] pileCopy;
 
-    /** initialise string of possible input specifications.*/
+    /**initialise string of possible input specifications.*/
     public String spec;
 
-    /** initialise magic number to avoid error.*/
-    private static final int magicNumber = 50;
+    /**initialise magic number to avoid error.*/
+    private static final int magicNumber = 50; //must match pattern error (capslocks??)
 
-    /** initialise a COPY of the 2D array for "placing" the cards in their initial row/column.*/
+    /**initialise COPY of placedCards 2D array.*/
     public int [] [] placedCardscopy;
 
     /**
      * Creates new CP class.
      * Operates input (accepts from both stdin and command-line inputs).
      * Runs through switch case and try..catch args.
-     * Takes command-line input arguments of either exactly two, or, three or more and outputs the respective answer from given specifications.
+     * Command-line arguments of either exactly two, or, three/more.
      * Reads any stdin inputs and deals with respective arguments given.
      * @param args - main method
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) { //method length 164 lines, needs to be 70
         CP card = new CP();
         switch (args.length) {
             case 0: //stdin
@@ -74,7 +74,7 @@ public class CP implements CardPile {
                         case "c": //call and print count
                             card.rowLength = Integer.parseInt(sc.next());
                             card.spec = sc.next();
-                            System.out.println(card.count(card.rowLength, card.spec));
+                            System.out.println(card.count(card.rowLength, card.spec)); //line longer than 80, current 86
                             break;
                         case "l": //load pile from 1 to n
                             card.size = Integer.parseInt(sc.next());
@@ -97,12 +97,10 @@ public class CP implements CardPile {
                             for(int u=0;u<countOfInt;u++){
                                 card.originalCards[u]=orgCards1[u];
                             }//end for
-//-------------------------------------------------------------------------------------------------
                             for (int num :card.originalCards) { //this will print out the array in one line
                                 System.out.print(num + " ");
                             }//end for
                             System.out.println();
-//------------------------------------------------------------------------------
                             card.size=card.originalCards.length;
                             card.load(card.originalCards);
                             break;
@@ -117,8 +115,8 @@ public class CP implements CardPile {
                             card.rowLength=sc.nextInt();
                             card.putDown(card.rowLength);
                             card.placedCardscopy=Arrays.copyOf(card.placedCards,card.placedCards.length);
-//                                card.numRows = card.size / card.rowLength;
-//                                card.numCols = card.rowLength;
+                            //card.numRows = card.size / card.rowLength;
+                            //card.numCols = card.rowLength;
                             for(int i = 0; i<card.numRows; i++){
                                 for(int j = 0; j<card.numCols; j++){
                                   System.out.print(card.placedCardscopy[i][j]+" ");
