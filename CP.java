@@ -49,6 +49,9 @@ public class CP implements CardPile {
 
     /**initialise magic number to avoid error.*/
     private static final int magicNumber = 50; //must match pattern error (capslocks??)
+    
+    /**initialise specification magic number to avoid error.*/
+    private static final int SPECNUM = 8;
 
     /**initialise COPY of placedCards 2D array.*/
     public int [] [] placedCardscopy;
@@ -156,7 +159,7 @@ public class CP implements CardPile {
                 }//end catch
                 if(card.message==null){
                     card.specification = new String[]{"TL","BL","TR","BR","LT","LB","RT","RB"};
-                    for (int counter =0; counter < 8; counter++) {
+                    for (int counter =0; counter < SPECNUM; counter++){ //8 is magic number!
                         System.out.println(card.specification[counter] + " " + card.count(card.rowLength, card.specification[counter])); //too long
                     }//end for
                 }//end if
@@ -241,7 +244,7 @@ public class CP implements CardPile {
     public void load(int n) {
         size = n;
         originalCards = new int[size];
-        for(int counter=0;counter<size;counter++){ //initialises array with size n
+        for(int counter=0;counter<size;counter++){ //initialise array with n
             originalCards[counter] = counter + 1;
         } //end for loop 
         pile = Arrays.copyOf(originalCards, size);
@@ -266,8 +269,8 @@ public class CP implements CardPile {
         numRows = size / rowLength;
         numCols = rowLength;
         placedCards = new int[numRows][numCols];
-        for (int row = 0; row < numRows; row++) { //the number of rows is the size of whole array/rowLength
-            for (int cols = 0; cols < numCols; cols++) { //Don't change this Mike. Draw the 2D array to prove it.
+        for(int row = 0; row < numRows; row++){
+            for(int cols = 0; cols < numCols; cols++){
                 //System.out.println(pile[index]); //testing
                 //System.out.println(row+" "+cols); //testing
                 placedCards[row][cols] = pile[index];
@@ -357,12 +360,12 @@ public class CP implements CardPile {
      * original order.
      * @param rowLength of array
      * @param spec of wanted card pile transformation
-     * @return count of min amout of transformations to return to original state/order of cards
+     * @return minimum count of transformations
      */
     public int count(int rowLength, String spec) {
         int counter = 0;
         do{
-            transform(rowLength,spec);//spec is from the method arguments, basically what got passed to the method.
+            transform(rowLength,spec);
             counter++;
         }while (!Arrays.equals(originalCards, pile));
         return counter;
@@ -371,6 +374,7 @@ public class CP implements CardPile {
     /**
      * method for question (c).
      * consists of all possible sequences of accessible card piles from 1-6
+     * @return number of accessible piles
      */
     public int accessible(){
         return 6;
@@ -380,7 +384,11 @@ public class CP implements CardPile {
      * Throwable exception class.
      */
     private static class CardPileException extends Throwable {
+        /**Declare serial version uid.*/
         public static final long serialVersionUID = 1234545;
+         /**
+         * CardPileException construstor.
+         */
         public CardPileException(String s){
             System.out.print(s);
         }//end constructor
