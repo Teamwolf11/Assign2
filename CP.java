@@ -2,7 +2,6 @@ package week11;
 
 import java.io.*;
 import java.lang.*; //redundant import??
-//import java.util.ArrayList; //checkstyle says this is an unused import
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -48,10 +47,10 @@ public class CP implements CardPile {
     public String spec;
 
     /**initialise magic number to avoid error.*/
-    private static final int magicNumber = 50; //must match pattern error (capslocks??)
+    private static final int magicNumber = 50; //needs to be caps lock but i can't see where used in code so delete?
     
     /**initialise specification magic number to avoid error.*/
-    private static final int SPECNUM = 8;
+    private static final int SPECNUMBER = 8;
 
     /**initialise COPY of placedCards 2D array.*/
     public int [] [] placedCardscopy;
@@ -64,12 +63,11 @@ public class CP implements CardPile {
      * Reads any stdin inputs and deals with respective arguments given.
      * @param args - main method
      */
-    public static void main(String[] args) { //method length 164 lines, needs to be 70
+    public static void main(String[] args) { //method length 162 lines, needs to be 70
         CP card = new CP();
         switch (args.length) {
             case 0: //stdin
                 Scanner scan = new Scanner(System.in);
-                //ArrayList <String> input= new ArrayList<String>();
                 while (scan.hasNextLine()) {
                     String input = scan.nextLine();
                     Scanner sc = new Scanner(input);
@@ -159,7 +157,7 @@ public class CP implements CardPile {
                 }//end catch
                 if(card.message==null){
                     card.specification = new String[]{"TL","BL","TR","BR","LT","LB","RT","RB"};
-                    for (int counter =0; counter < SPECNUM; counter++){ //8 is magic number!
+                    for (int counter =0;counter<SPECNUMBER;counter++){
                         System.out.println(card.specification[counter] + " " + card.count(card.rowLength, card.specification[counter])); //too long
                     }//end for
                 }//end if
