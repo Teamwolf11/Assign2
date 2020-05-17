@@ -1,5 +1,6 @@
 package week11;
 
+import java.io.*;
 import java.lang.*;
 import java.util.Arrays;
 
@@ -87,33 +88,33 @@ public class CP implements CardPile { //class CP.java
                 card.rowLength = Integer.parseInt(args[1]);
                 card.load(card.size);
                 for (int i = 0; i < args.length - 2; i++) {
-                        //all code in between these lines are for exceptions of case 2
+                    //all code in between these lines are for exceptions of case 2
 
-                        try { //to throw the exception if the row length and size are incorrect input (bad numbers)
+                    try { //to throw the exception if the row length and size are incorrect input (bad numbers)
 
-                            if (card.size % card.rowLength != 0) {
-                                card.message = "Number given for pile size is not multiple of the rowLength.";
-                                throw new CardPileException(card.message);
-                            }
+                        if (card.size % card.rowLength != 0) {
+                            card.message = "Number given for pile size is not multiple of the rowLength.";
+                            throw new CardPileException(card.message);
+                        }
 
-                        } catch (CardPileException e) {
-                            System.err.println(e);
-                            break;
-                        }//end catch
-                    
-                        try { //exception code for if specification input is incorrect (not one of the specific 8)
+                    } catch (CardPileException e) {
+                        System.err.println(e);
+                        break;
+                    }//end catch
+
+                    try { //exception code for if specification input is incorrect (not one of the specific 8)
 
                         if (!(card.specification[i].equals("TL") || card.specification[i].equals("TR") ||
-                            card.specification[i].equals("BL") || card.specification[i].equals("BR") ||
-                            card.specification[i].equals("LT") || card.specification[i].equals("LB")
-                            || card.specification[i].equals("RT") || card.specification[i].equals("RB"))) {
+                                card.specification[i].equals("BL") || card.specification[i].equals("BR") ||
+                                card.specification[i].equals("LT") || card.specification[i].equals("LB")
+                                || card.specification[i].equals("RT") || card.specification[i].equals("RB"))) {
                             card.message = "Please enter one of the correct 8 specifications. They are TL, BL, TR, BR, LT, LB, RT, RB.";
                             throw new CardPileException(card.message);
                         }
-                        } catch (CardPileException e) {
-                            System.err.println(e);
-                            break;
-                        }//end catch
+                    } catch (CardPileException e) {
+                        System.err.println(e);
+                        break;
+                    }//end catch
                 }//end for
                 if (card.message==null) {
                     //Prints out array before any transformations
@@ -140,7 +141,7 @@ public class CP implements CardPile { //class CP.java
                             System.out.print(num + " ");
                         }//end for
                         System.out.println();
-                        
+
 //---------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------
 //                  //Testing output/code for part 3, question (a):
@@ -321,8 +322,9 @@ public class CP implements CardPile { //class CP.java
      *
      */
     private static class CardPileException extends Throwable {
+        public static final long serialVersionUID=1234545;
         public CardPileException(String s) {
-        System.out.print(s);
+            System.out.print(s);
         }//end constructor
     }//end inner class
 }//end class
