@@ -298,7 +298,6 @@ public class CP implements CardPile {
                     //System.out.println("Row: "+row+"Col: "+ cols+"index: "+index+"It has inputed pile"); //testing
                 }//inner for
             }//outer for
-//--------------------------------------------------------------------------------------------------------------------------
         } else if (spec.equals("TR")) { //top right transformation
             for (int cols=numCols-1; cols>=0; cols--) {
                 for (int row = 0; row < numRows; row++) {
@@ -306,7 +305,6 @@ public class CP implements CardPile {
                     index++;
                 }//inner for
             }//outer for
-//--------------------------------------------------------------------------------------------------------------------------
         } else if (spec.equals("BL")) { //bottom left transformation
             for (int cols=0; cols<numCols; cols++) {
                 for (int row =numRows-1; row >=0; row--) {
@@ -314,7 +312,6 @@ public class CP implements CardPile {
                     index++;
                 }//inner for
             }//outer for
-//--------------------------------------------------------------------------------------------------------------------------
         } else if (spec.equals("BR")) { //bottom right transformation
             for (int cols=numCols-1; cols>=0; cols--) {
                 for (int row =numRows-1; row >=0; row--) {
@@ -322,7 +319,6 @@ public class CP implements CardPile {
                     index++;
                 }//inner for
             }//outer for
-//--------------------------------------------------------------------------------------------------------------------------
         } else if (spec.equals("LT")) { //left top transformation
             for (int row = 0; row < numRows; row++) {
                 for (int cols = 0; cols < numCols; cols++) {
@@ -330,7 +326,6 @@ public class CP implements CardPile {
                     index++;
                 }//inner for
             }//outer for
-//--------------------------------------------------------------------------------------------------------------------------
         } else if (spec.equals("RT")) { //right top transformation
             for (int row = 0; row < numRows; row++) {
                 for (int cols=numCols-1; cols>=0; cols--) {
@@ -338,7 +333,6 @@ public class CP implements CardPile {
                     index++;
                 }//inner for
             }//outer for
-//--------------------------------------------------------------------------------------------------------------------------
         } else if (spec.equals("LB")) { //left bottom transformation
             for (int row =numRows-1; row >=0; row--) {
                 for (int cols = 0; cols < numCols; cols++) {
@@ -346,7 +340,6 @@ public class CP implements CardPile {
                     index++;
                 }//inner for
             }//outer for
-//--------------------------------------------------------------------------------------------------------------------------
         } else if (spec.equals("RB")) { //right bottom transformation
             for (int row =numRows-1; row >=0; row--) {
                 for (int cols=numCols-1; cols>=0; cols--) {
