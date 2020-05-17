@@ -75,7 +75,7 @@ public class CP implements CardPile {
                         case "c": //call and print count
                             card.rowLength = Integer.parseInt(sc.next());
                             card.spec = sc.next();
-                            System.out.println(card.count(card.rowLength, card.spec)); //line longer than 80, current 86
+                            System.out.println(card.count(card.rowLength,card.spec)); //line longer than 80, current 86
                             break;
                         case "l": //load pile from 1 to n
                             card.size = Integer.parseInt(sc.next());
@@ -99,7 +99,7 @@ public class CP implements CardPile {
                                 card.originalCards[u]=orgCards1[u];
                             }//end for
                             for(int num :card.originalCards){
-                                System.out.print(num + " "); //this will print out the array in one line
+                                System.out.print(num + " ");//print array in one line
                             }//end for
                             System.out.println();
                             card.size=card.originalCards.length;
@@ -148,7 +148,7 @@ public class CP implements CardPile {
                 card.load(card.size);
                 try{//throw exception if row length/size are incorrect input
                     if(card.size % card.rowLength != 0) {
-                        card.message = "Number of pile size is not multiple of rowLength.";
+                        card.message = "Pile size is not multiple of rowLength.";
                         throw new CardPileException(card.message);
                     }//end if
                 }catch (CardPileException e) {
@@ -156,9 +156,9 @@ public class CP implements CardPile {
                     break;
                 }//end catch
                 if(card.message==null){
-                    card.specification = new String[]{"TL","BL","TR","BR","LT","LB","RT","RB"};
+                    card.specification=new String[]{"TL","BL","TR","BR","LT","LB","RT","RB"}; //too long
                     for (int counter =0;counter<SPECNUMBER;counter++){
-                        System.out.println(card.specification[counter] + " " + card.count(card.rowLength, card.specification[counter])); //too long
+                       System.out.println(card.specification[counter] + " " + card.count(card.rowLength, card.specification[counter])); //too long
                     }//end for
                 }//end if
                 break;
@@ -169,9 +169,9 @@ public class CP implements CardPile {
                 card.rowLength = Integer.parseInt(args[1]);
                 card.load(card.size);
                 for(int i = 0; i < args.length - 2; i++){
-                    try{ //throw exception if row length & size are incorrect input
+                    try{ //throw exception if row length/size are incorrect input
                         if (card.size % card.rowLength != 0) {
-                            card.message = "Number of pile size is not multiple of rowLength.";
+                            card.message = "Pile size is not multiple of rowLength.";
                             throw new CardPileException(card.message);
                         }//end if
                     } catch (CardPileException e) {
@@ -183,7 +183,7 @@ public class CP implements CardPile {
                                 card.specification[i].equals("BL") || card.specification[i].equals("BR") ||
                                 card.specification[i].equals("LT") || card.specification[i].equals("LB")
                                 || card.specification[i].equals("RT") || card.specification[i].equals("RB"))) {
-                            card.message = "Please enter either TL, BL, TR, BR, LT, LB, RT, RB.";
+                            card.message="Please enter TL, BL, TR, BR, LT, LB, RT, RB.";
                             throw new CardPileException(card.message);
                         }//end if
                     } catch (CardPileException e) {
@@ -209,7 +209,7 @@ public class CP implements CardPile {
                         card.transform(card.rowLength, card.specification[i]);
                         //System.out.println("SIZE IS: "+card.size+"\t ROW LENGTH IS: " + card.rowLength + "\t SPEC IS: " + card.specification[i]); //testing
                         card.pileCopy = card.getPile();
-                        for (int num : card.pileCopy) {//this will print out the array in one line
+                        for(int num : card.pileCopy){//print array in one line
                             System.out.print(num + " ");
                         }//end for
                         System.out.println();
