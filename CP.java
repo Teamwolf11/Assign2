@@ -49,6 +49,8 @@ public class CP implements CardPile {
 
     /** initialise magic number to avoid error.*/
     private static final int magicNumber = 50;
+    
+    public int [] [] placedCardscopy;
 
     /**
      * Creates new CP class.
@@ -61,58 +63,101 @@ public class CP implements CardPile {
     public static void main(String[] args) {
         CP card = new CP();
         switch (args.length) {
-            case 0: //stdin
+            case 0:
+//this is for stdin
                 Scanner scan = new Scanner(System.in);
+
                 //ArrayList <String> input= new ArrayList<String>();
+
                 while (scan.hasNextLine()) {
+
                         String input = scan.nextLine();
                         Scanner sc = new Scanner(input);
                         switch (sc.next()) {
                             case "c":
-                                card.rowLength =Integer.parseInt(sc.next());
-                                card.spec =sc.next();
-                                 System.out.println(card.count(card.rowLength, card.spec));
+                                card.rowLength = Integer.parseInt(sc.next());
+                                card.spec = sc.next();
+                                System.out.println(card.count(card.rowLength, card.spec));
                                 break;
                             case "l":
                                 card.size = Integer.parseInt(sc.next());
                                 card.load(card.size);
-                              //Arrays.toString(card.pile);
+//                                Arrays.toString(card.pile);
                                 break;
-                            case"L":
-                                int i=0;
-                                card.originalCards=new int [magicNumber];
-                                while(sc.hasNextInt()) {
-                                    card.originalCards[i++]=sc.nextInt();
+                            case "L":
+
+                                int counter = 0;
+                                int [] orgCards1=new int [input.length()];
+                                while (sc.hasNextInt()) {
+                                    orgCards1[counter++]=(sc.nextInt());
                                 }//end while
+                                int countOfInt=0;
+
+                               for (int u =0;u<orgCards1.length;u++) {
+
+                                   if(orgCards1[u]!=0){
+
+                                       countOfInt++;
+                               }//end while
+
+                               }//end for
+
+                                card.originalCards=new int [countOfInt];
+
+                                for(int u=0;u<countOfInt;u++){
+                                    card.originalCards[u]=orgCards1[u];
+                                }//end for
+//-------------------------------------------------------------------------------------------------
+
+                                for (int num :card.originalCards) { //this will print out the array in one line
+                                    System.out.print(num + " ");
+                                }//end for
+                                System.out.println();
+ //------------------------------------------------------------------------------
+
+
+
                                 card.size=card.originalCards.length;
                                 card.load(card.originalCards);
                                 break;
                             case "p":
-                                card.pileCopy = card.getPile();
+
+                                card.pileCopy = Arrays.copyOf(card.pile, card.size);
                                 for (int num : card.pileCopy) { //this will print out the array in one line
                                     System.out.print(num + " ");
                                 }//end for
                                 System.out.println();
+
                                 break;
+
                             case "P":
                                 card.rowLength=sc.nextInt();
-                                int index = 0;
-                                card.numRows = card.size / rowLength;
-                                numCols = rowLength;
-                                placedCards = new int[numRows][numCols];
-                                for (int row = 0; row < numRows; row++) {//the number of rows is the size of whole array/rowLength
-                                    for (int cols = 0; cols < numCols; cols++) {//Don't change this Mike. Draw the 2D array to prove it.
-                                        //System.out.println(pile[index]); //testing
-                                        //System.out.println(row+" "+cols); //testing
-                                        placedCards[row][cols] = pile[index];
-                                        index++;
-                                    }//inner for
-                                }//outer for
+                                card.putDown(card.rowLength);
+                                card.placedCardscopy=Arrays.copyOf(card.placedCards,card.placedCards.length);
+//                                card.numRows = card.size / card.rowLength;
+//                                card.numCols = card.rowLength;
+                                for(int i = 0; i<card.numRows; i++)
+                                {
+                                    for(int j = 0; j<card.numCols; j++)
+                                    {
+                                        System.out.print(card.placedCardscopy[i][j]+" ");
+                                    }
+                                    System.out.println();
+                                }
+
+
                                 break;
-                        }//end switch
-                }//end while
+
+
+                            default:
+
+                        }//end switchh
+
+                }
+
+
+
                 break;
-            
             case 1: //part(c)
 //                card.size=Integer.parseInt(args[0]);
 //                card.load(card.size);
