@@ -60,6 +60,8 @@ public class CP implements CardPile {
 
     public boolean old;
 
+    public int qwerty;
+
     /**
      * Creates new CP class.
      * Operates input (accepts from both stdin and command-line inputs).
@@ -434,9 +436,10 @@ do {
 }while(!(f==count1));
 
 System.out.println(f);
+System.out.println(qwerty);
 }//end method
 
-    public boolean checkingF(int[] []pileCopy1,int[]pile) {
+    public boolean checkingF(int[][]pileCopy1,int[]pile) {
         boolean veryOld = false;
         for (int h = 0; h < f + 1; h++) {
 
@@ -451,7 +454,7 @@ System.out.println(f);
 //                System.out.print(num + " ");
 //            }
 //            System.out.println();
-            if (Arrays.equals(pileCopy1[h], pile) ) {
+            if (Arrays.equals(pileCopy1[h], pile) && ++qwerty>0) {
                 veryOld = true;
                 //System.out.println("NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE true" + h);
                 break;
@@ -499,7 +502,7 @@ System.out.println(f);
 //                System.out.print(num + " ");
 //            }
 //            System.out.println();
-            if (Arrays.equals(pileCopy1[h], pile)) {
+            if (Arrays.equals(pileCopy1[h], pile)&& ++qwerty>0) {
                 old = true;
  //               System.out.println("NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE true" + h);
                 break;
