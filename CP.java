@@ -59,7 +59,7 @@ public class CP implements CardPile {
      * Reads any stdin inputs and deals with respective arguments given.
      * @param args - main method
      */
-    public static void main(String[] args){
+    public static void main(String[] args) { //method length 162 lines, needs to be 70
         CP card = new CP();
         switch (args.length){
             case 0: Scanner scan = new Scanner(System.in); //stdin
@@ -117,27 +117,7 @@ public class CP implements CardPile {
 //                }
                 break;
             case 2://2 command line args
-                card.size = Integer.parseInt(args[0]);
-                card.rowLength = Integer.parseInt(args[1]);
-                card.load(card.size);
-                try{//throw exception if row length/size are incorrect input
-                    if(card.size % card.rowLength != 0) {
-                        card.message="Pile size is not multiple of rowLength.";
-                        throw new CardPileException(card.message);
-                    }//end if
-                }catch (CardPileException e) {
-                    System.err.println(e);
-                    break;
-                }//end catch
-                if(card.message==null){
-                    card.specification=new String[]
-                            {"TL","BL","TR","BR","LT","LB","RT","RB"};
-                    for (int counter =0;counter<SPECNUMBER;counter++){
-                        System.out.println(card.specification[counter]
-                                + " " + card.count
-                                (card.rowLength,card.specification[counter]));
-                    }//end for
-                }//end if
+                card.input2Args(args);
                 break;
             default: //runs if more than 3 arguments in command-line input
                 card.specification = new String[args.length-2];
@@ -145,6 +125,107 @@ public class CP implements CardPile {
                 card.input3Args(args);
         }//end switch
     }//end main method
+public void input2Args(String [] args){
+    size = Integer.parseInt(args[0]);
+    rowLength = Integer.parseInt(args[1]);
+    load(size);
+    try{//throw exception if row length/size are incorrect input
+        if(size % rowLength != 0) {
+            message="Pile size is not multiple of rowLength.";
+            throw new CardPileException(message);
+        }//end if
+    }catch (CardPileException e) {
+        System.err.println(e);
+
+    }//end catch
+    if(message==null){
+        specification=new String[]
+                {"TL","BL","TR","BR","LT","LB","RT","RB"};
+        for (int counter =0;counter<SPECNUMBER;counter++){
+            System.out.println(specification[counter]
+                    + " " + count(rowLength,specification[counter]));
+        }//end for
+    }//end if
+
+}//end method input2args
+public void input3Args(String []args) {
+    size = Integer.parseInt(args[0]);
+
+    rowLength = Integer.parseInt(args[1]);
+    load(size);
+    for(int i = 0; i < args.length - 2; i++){
+        //throw exception if row length/size are incorrect input
+        try{
+            if (size % rowLength != 0) {
+                message="Pile size not multiple of rowLength.";
+                throw new CardPileException(message);
+            }//end if
+        } catch (CardPileException e) {
+            System.err.println(e);
+            break;
+        }//end catch
+        try { //exception code incorrect specification
+            if (!(specification[i].equals("TL") ||
+                    specification[i].equals("TR") ||
+                    specification[i].equals("BL") ||
+                    specification[i].equals("BR") ||
+                    specification[i].equals("LT") ||
+                    specification[i].equals("LB") ||
+                    specification[i].equals("RT") ||
+                    specification[i].equals("RB"))) {
+                message = "Please enter TL, BL, TR, BR, LT, LB, RT, RB.";
+                throw new CardPileException(message);
+            }//end if
+        } catch (CardPileException e) {
+            System.err.println(e);
+            break;
+        }//end catch
+    }//end for
+    if (message==null) {//Prints array before transformations
+        pileCopy = getPile();
+        for(int num : pileCopy) { //print array in one line
+            System.out.print(num + " ");
+        }//end for
+        System.out.println();
+        for (int i = 0; i < args.length - 2; i++) {
+            transform(rowLength, specification[i]);
+            pileCopy = getPile();
+            for(int num : pileCopy){//print array in one line
+                System.out.print(num + " ");
+            }//end for
+            System.out.println();
+        }//end for
+    }//end if to check exceptions
+
+
+
+}   //end method
+
+public void print2D(int [] [] placedCardscopy){
+    for(int i = 0; i<numRows; i++){
+        for(int j = 0; j<numCols; j++){
+            System.out.print(placedCardscopy[i][j]+" ");
+        }//end inner for
+        System.out.println();
+    }//end outer for
+
+}//end method print2D
+    public void loader(int[] orgCards1){
+        int countOfInt=0;
+        for (int u =0;u<orgCards1.length;u++) {
+            if(orgCards1[u]!=0){
+                countOfInt++;
+            }//end while
+        }//end for
+
+        originalCards=new int [countOfInt];
+        for(int u=0;u<countOfInt;u++){
+            originalCards[u]=orgCards1[u];
+        }//end for
+        size=originalCards.length;
+        load(originalCards);
+
+    }//end loader
 
     /**
      * Loads a copy of the given array as the pile of cards.
@@ -284,91 +365,6 @@ public class CP implements CardPile {
         }while (!Arrays.equals(originalCards, pile));
         return counter;
     }//end method count
-
-    /**
-     * command-line specification with 3 input args (the default switch case).
-     * @param args String array
-     */ 
-     public void input3Args(String []args) {
-        size = Integer.parseInt(args[0]);
-        rowLength = Integer.parseInt(args[1]);
-        load(size);
-        for(int i = 0; i < args.length - 2; i++){
-            //throw exception if row length/size are incorrect input
-            try{
-                if (size % rowLength != 0) {
-                    message="Pile size not multiple of rowLength.";
-                    throw new CardPileException(message);
-                }//end if
-            } catch (CardPileException e) {
-                System.err.println(e);
-                break;
-            }//end catch
-            try { //exception code incorrect specification
-                if (!(specification[i].equals("TL") ||
-                        specification[i].equals("TR") ||
-                        specification[i].equals("BL") ||
-                        specification[i].equals("BR") ||
-                        specification[i].equals("LT") ||
-                        specification[i].equals("LB") ||
-                        specification[i].equals("RT") ||
-                        specification[i].equals("RB"))) {
-                    message = "Please enter TL, BL, TR, BR, LT, LB, RT, RB.";
-                    throw new CardPileException(message);
-                }//end if
-            } catch (CardPileException e) {
-                System.err.println(e);
-                break;
-            }//end catch
-        }//end for
-        if (message==null) {//Prints array before transformations
-            pileCopy = getPile();
-            for(int num : pileCopy) { //print array in one line
-                System.out.print(num + " ");
-            }//end for
-            System.out.println();
-            for (int i = 0; i < args.length - 2; i++) {
-                transform(rowLength, specification[i]);
-                pileCopy = getPile();
-                for(int num : pileCopy){//print array in one line
-                    System.out.print(num + " ");
-                }//end for
-                System.out.println();
-            }//end for
-        }//end if to check exceptions
-    }//end input3Args method
-
-    /**
-     * stdin specification for p method.
-     * @param placedCardscopy 2D array
-     */
-    public void print2D(int [] [] placedCardscopy){
-        for(int i = 0; i<numRows; i++){
-            for(int j = 0; j<numCols; j++){
-                System.out.print(placedCardscopy[i][j]+" ");
-            }//end inner for
-            System.out.println();
-        }//end outer for
-    }//end print2D method
-    
-    /**
-     * stdin specification for L method.
-     * @param orgCards1 array
-     */
-    public void loader(int[] orgCards1){
-        int countOfInt=0;
-        for (int u =0;u<orgCards1.length;u++) {
-            if(orgCards1[u]!=0){
-                countOfInt++;
-            }//end while
-        }//end for
-        originalCards=new int [countOfInt];
-        for(int u=0;u<countOfInt;u++){
-            originalCards[u]=orgCards1[u];
-        }//end for
-        size=originalCards.length;
-        load(originalCards);
-    }//end loader method
 
     /**
      * method for question (c).
