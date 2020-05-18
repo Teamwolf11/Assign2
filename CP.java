@@ -1,7 +1,6 @@
 package week11;
 
 import java.io.*;
-//import java.lang.*; //redundant import??
 import java.util.Arrays;
 import java.util.Scanner;
 
