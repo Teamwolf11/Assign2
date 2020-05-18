@@ -146,9 +146,11 @@ public class CP implements CardPile {
                     break;
                 }//end catch
                 if(card.message==null){
-                    card.specification=new String[]{"TL","BL","TR","BR","LT","LB","RT","RB"}; //too long
+                    card.specification=new String[]
+                            {"TL","BL","TR","BR","LT","LB","RT","RB"};
                     for (int counter =0;counter<SPECNUMBER;counter++){
-                       System.out.println(card.specification[counter] + " " + card.count(card.rowLength, card.specification[counter])); //too long
+                       System.out.println(card.specification[counter] + " " + card.count
+                                    (card.rowLength, card.specification[counter]));
                     }//end for
                 }//end if
                 break;
@@ -169,10 +171,14 @@ public class CP implements CardPile {
                         break;
                     }//end catch
                     try { //exception code incorrect specification
-                        if (!(card.specification[i].equals("TL") || card.specification[i].equals("TR") ||
-                                card.specification[i].equals("BL") || card.specification[i].equals("BR") ||
-                                card.specification[i].equals("LT") || card.specification[i].equals("LB")
-                                || card.specification[i].equals("RT") || card.specification[i].equals("RB"))) {
+                        if (!(card.specification[i].equals("TL") || 
+                              card.specification[i].equals("TR") ||
+                              card.specification[i].equals("BL") || 
+                              card.specification[i].equals("BR") ||
+                              card.specification[i].equals("LT") || 
+                              card.specification[i].equals("LB") || 
+                              card.specification[i].equals("RT") || 
+                              card.specification[i].equals("RB"))) {
                             card.message="Please enter TL, BL, TR, BR, LT, LB, RT, RB.";
                             throw new CardPileException(card.message);
                         }//end if
