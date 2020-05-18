@@ -140,57 +140,64 @@ public class CP implements CardPile {
                 }//end if
                 break;
             default: //runs if more than 3 arguments in command-line input
-                card.size = Integer.parseInt(args[0]);
                 card.specification = new String[args.length-2];
                 System.arraycopy(args,2,card.specification,0,args.length-2);
-                card.rowLength = Integer.parseInt(args[1]);
-                card.load(card.size);
-                for(int i = 0; i < args.length - 2; i++){
-                    //throw exception if row length/size are incorrect input
-                    try{
-                        if (card.size % card.rowLength != 0) {
-                            card.message="Pile size not multiple of rowLength.";
-                            throw new CardPileException(card.message);
-                        }//end if
-                    } catch (CardPileException e) {
-                        System.err.println(e);
-                        break;
-                    }//end catch
-                    try { //exception code incorrect specification
-                        if (!(card.specification[i].equals("TL") ||
-                                card.specification[i].equals("TR") ||
-                                card.specification[i].equals("BL") ||
-                                card.specification[i].equals("BR") ||
-                                card.specification[i].equals("LT") ||
-                                card.specification[i].equals("LB") ||
-                                card.specification[i].equals("RT") ||
-                                card.specification[i].equals("RB"))) {
-                            card.message =
-                                    "Please enter TL, BL, TR, BR, LT, LB, RT, RB.";
-                            throw new CardPileException(card.message);
-                        }//end if
-                    } catch (CardPileException e) {
-                        System.err.println(e);
-                        break;
-                    }//end catch
-                }//end for
-                if (card.message==null) {//Prints array before transformations
-                    card.pileCopy = card.getPile();
-                    for(int num : card.pileCopy) { //print array in one line
-                        System.out.print(num + " ");
-                    }//end for
-                    System.out.println();
-                    for (int i = 0; i < args.length - 2; i++) {
-                        card.transform(card.rowLength, card.specification[i]);
-                        card.pileCopy = card.getPile();
-                        for(int num : card.pileCopy){//print array in one line
-                            System.out.print(num + " ");
-                        }//end for
-                        System.out.println();
-                    }//end for
-                }//end if to check exceptions
+                card.input3Args(args);
         }//end switch
     }//end main method
+
+public void input3Args(String []args) {
+    size = Integer.parseInt(args[0]);
+
+    rowLength = Integer.parseInt(args[1]);
+    load(size);
+    for(int i = 0; i < args.length - 2; i++){
+        //throw exception if row length/size are incorrect input
+        try{
+            if (size % rowLength != 0) {
+                message="Pile size not multiple of rowLength.";
+                throw new CardPileException(message);
+            }//end if
+        } catch (CardPileException e) {
+            System.err.println(e);
+            break;
+        }//end catch
+        try { //exception code incorrect specification
+            if (!(specification[i].equals("TL") ||
+                    specification[i].equals("TR") ||
+                    specification[i].equals("BL") ||
+                    specification[i].equals("BR") ||
+                    specification[i].equals("LT") ||
+                    specification[i].equals("LB") ||
+                    specification[i].equals("RT") ||
+                    specification[i].equals("RB"))) {
+                message = "Please enter TL, BL, TR, BR, LT, LB, RT, RB.";
+                throw new CardPileException(message);
+            }//end if
+        } catch (CardPileException e) {
+            System.err.println(e);
+            break;
+        }//end catch
+    }//end for
+    if (message==null) {//Prints array before transformations
+        pileCopy = getPile();
+        for(int num : pileCopy) { //print array in one line
+            System.out.print(num + " ");
+        }//end for
+        System.out.println();
+        for (int i = 0; i < args.length - 2; i++) {
+            transform(rowLength, specification[i]);
+            pileCopy = getPile();
+            for(int num : pileCopy){//print array in one line
+                System.out.print(num + " ");
+            }//end for
+            System.out.println();
+        }//end for
+    }//end if to check exceptions
+
+
+
+}   //end method
 
 public void print2D(int [] [] placedCardscopy){
     for(int i = 0; i<numRows; i++){
