@@ -28,6 +28,7 @@ public class CP implements CardPile {
     /**initialise string array of possible input specifications.*/
     public String[] specification;
 
+    /**initialise string array of specifications.*/
     public String [] specs1;
 
     /**initialise original array of cards.*/
@@ -45,6 +46,7 @@ public class CP implements CardPile {
     /**initialise pileCopy as a copy of our originalCards array.*/
     public int[] pileCopy;
 
+    /**initialise pileCopy1 as another copy.*/
     public int[][] pileCopy1;
 
     /**initialise string of possible input specifications.*/
@@ -56,14 +58,14 @@ public class CP implements CardPile {
     /**initialise COPY of placedCards 2D array.*/
     public int [] [] placedCardscopy;
 
-    /**f is position of the last array in accessible arrays*/
+    /**f is position of the last array in accessible arrays.*/
     int f;
 
-    /**initialise boolean old for last array to current array comparison in (c)*/
+    /**initialise boolean old of last array to current array comparison, Q(c).*/
     public boolean old;
 
-    /**UNSURE DOUBLE CHECK NAMING*/
-    public int qwerty;
+    /**initialise comparisons int.*/
+    public int comparisons;
 
     /**
      * Creates new CP class.
@@ -123,7 +125,7 @@ public class CP implements CardPile {
                 break;
             case 1: //part(c)
                  card.size=Integer.parseInt(args[0]);
-                 card.Q3c(card.size);
+                 card.accessible(card.size);
                 break;
             case 2://2 command line args
                 card.input2Args(args);
@@ -401,11 +403,11 @@ public class CP implements CardPile {
 
    
     /**
-     * Q3c method to find answer for report question (c).
+     * accessible method to find answer for report question (c).
      * runs various methods to work through accessible piles of cards
      * @param size of card pile
      */
-    public void Q3c(int size) {
+    public void accessible(int size) {
     load(size);
     f=0;
     pileCopy1= new int [(int) factorial(size)][size];
@@ -423,29 +425,28 @@ public class CP implements CardPile {
         for (int m = 1; m < f; m++) {
             count1=f;
             load(pileCopy1[m]);
-            for(int i = 1; i <= size; i++) {//this is for all the possible row lengths ie 6-3 6-1 6-2 6-6
+            for(int i = 1; i <= size; i++) {//for all possible row lengths 
                 if (size % i == 0) {
                     rowLength = i;
-                    for (String oneSpec : specs1) { //that makes it do something, with the orginal array
-                        // System.out.println(oneSpec + "hi");
+                    for (String oneSpec : specs1) { //checks with the orginal array
                         transform(rowLength, oneSpec);
-                        // System.out.println(oneSpec + "hi2");
                         checkFound( oneSpec);
                         ifOld(old,oneSpec);
                     }//end for
                 }//end if
             }//end for
-        }//end for for all where you start with the unique array in pileCopy1
+        }//end for, where you start with unique array in pileCopy1
         }while(!(f==count1));
         System.out.println(f);
-        System.out.println(qwerty);
+        System.out.println(comparisons);
     }//end method
 
     
     /**
      * stdin specification for L method.
-     * @param 2D array of pileCopy1
+     * @param pileCopy1 for 2D array
      * @param pile array
+     * @return veryOld array
      */
     public boolean checkingF(int[][]pileCopy1,int[]pile) {
         boolean veryOld = false;
@@ -460,7 +461,7 @@ public class CP implements CardPile {
 //                System.out.print(num + " ");
 //            }
 //            System.out.println();
-            if (Arrays.equals(pileCopy1[h], pile) && ++qwerty>0) {
+            if (Arrays.equals(pileCopy1[h], pile) && ++comparisons>0) {
                 veryOld = true;
                 break;
             } else {
@@ -475,13 +476,11 @@ public class CP implements CardPile {
      * runsRows method to look through each num in row.
      */
     public void runRows(){
-        for(int i = 1; i <= size; i++) {//this is for all the possible row lengths ie 6-3 6-1 6-2 6-6
+        for(int i = 1; i <= size; i++) {//for all possible row lengths
             if (size % i == 0) {
                 rowLength = i;
                 for (String oneSpec : specs1) {
-                   // System.out.println(oneSpec + "hi");
                     transform(rowLength, oneSpec);
-                   // System.out.println(oneSpec + "hi2");
                     checkFound( oneSpec);
                     ifOld(old,oneSpec);
                 }//end for
@@ -497,20 +496,16 @@ public class CP implements CardPile {
     public void checkFound(String oneSpec) {
         for (int h = 0; h < f + 1; h++) {
             old = false;
-//            System.out.println("NIGHTMARE NIGHTMARE NIGHTMARE");
-//            System.out.println(oneSpec + "hi3 " + old + " " + rowLength);
-//            System.out.println("this is crack " + h);
 //            for (int num : pileCopy1[h]) {
 //                System.out.print(num + " ");
 //            }//end for
 //            System.out.println();
-//
 //            System.out.println("This is pile");
 //            for (int num : pile) {
 //                System.out.print(num + " ");
 //            }
 //            System.out.println();
-            if (Arrays.equals(pileCopy1[h], pile)&& ++qwerty>0) {
+            if (Arrays.equals(pileCopy1[h], pile)&& ++comparisons>0) {
                 old = true;
                 break;
             } else {
@@ -522,15 +517,13 @@ public class CP implements CardPile {
 //                System.out.print(num + " ");
 //            }//end for
 //            System.out.println();
-//
 //            System.out.println("This is pile");
 //            for (int num : pile) {
 //                System.out.print(num + " ");
 //            }
 //            System.out.println();
         }//end for this for checks if pile is equal to any found array
-    }
-
+    }//end method
 
     /**
      * ifOld method.
@@ -543,10 +536,6 @@ public class CP implements CardPile {
                 pileCopy1[f][d] = pile[d];
             }//end for
             f++;
-//
-//            System.out.println("The size is" + f);
-//            System.out.println("I have been added to pileCopy2 " + rowLength + oneSpec + (f)+pileCopy1[]);
-//            System.out.println("this is crack");
 //            for (int num : pileCopy1[f - 1]) {
 //                System.out.print(num + " ");
 //            }//end for
@@ -554,10 +543,10 @@ public class CP implements CardPile {
         }//end if
     }
     
-    
     /**
      * factorial method.
      * @param number int to check factorial
+     * return results of method
      */
     public static long factorial(int number) {
         long result = 1;
