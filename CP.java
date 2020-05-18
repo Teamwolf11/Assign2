@@ -55,11 +55,14 @@ public class CP implements CardPile {
 
     /**initialise COPY of placedCards 2D array.*/
     public int [] [] placedCardscopy;
-//this is f is the position of the last array in the accessible arrrays
+
+    /**f is position of the last array in accessible arrays*/
     int f;
 
+    /**initialise boolean old for last array to current array comparison in (c)*/
     public boolean old;
 
+    /**UNSURE DOUBLE CHECK NAMING*/
     public int qwerty;
 
     /**
@@ -119,9 +122,8 @@ public class CP implements CardPile {
                 }//end while
                 break;
             case 1: //part(c)
-             card.size=Integer.parseInt(args[0]);
-             card.Q3c(card.size);
-
+                 card.size=Integer.parseInt(args[0]);
+                 card.Q3c(card.size);
                 break;
             case 2://2 command line args
                 card.input2Args(args);
@@ -396,54 +398,58 @@ public class CP implements CardPile {
             System.out.print(s);
         }//end constructor
     }//end inner class
-public void Q3c(int size) {
 
+   
+    /**
+     * Q3c method to find answer for report question (c).
+     * runs various methods to work through accessible piles of cards
+     * @param size of card pile
+     */
+    public void Q3c(int size) {
     load(size);
-f=0;
+    f=0;
     pileCopy1= new int [(int) factorial(size)][size];
     specs1 = new String[]
-            {"TL", "BL", "TR", "BR", "LT", "LB", "RT", "RB"};
+           {"TL", "BL", "TR", "BR", "LT", "LB", "RT", "RB"};
     int [] orgCards=Arrays.copyOf(originalCards,originalCards.length);
     for(int u=0;u<size;u++){
-
         pileCopy1[0][u]=orgCards[u];//add will be at index 0
     }//end for
-f++;
-old=false;
-runRows();
+    f++;
+    old=false;
+    runRows();
+    int count1=0;
+    do {
+        for (int m = 1; m < f; m++) {
+            count1=f;
+            load(pileCopy1[m]);
+            for(int i = 1; i <= size; i++) {//this is for all the possible row lengths ie 6-3 6-1 6-2 6-6
+                if (size % i == 0) {
+                    rowLength = i;
+                    for (String oneSpec : specs1) { //that makes it do something, with the orginal array
+                        // System.out.println(oneSpec + "hi");
+                        transform(rowLength, oneSpec);
+                        // System.out.println(oneSpec + "hi2");
+                        checkFound( oneSpec);
+                        ifOld(old,oneSpec);
+                    }//end for
+                }//end if
+            }//end for
+        }//end for for all where you start with the unique array in pileCopy1
+        }while(!(f==count1));
+        System.out.println(f);
+        System.out.println(qwerty);
+    }//end method
 
-int count1=0;
-do {
-    for (int m = 1; m < f; m++) {
-        count1=f;
-        load(pileCopy1[m]);
-        for(int i = 1; i <= size; i++) {//this is for all the possible row lengths ie 6-3 6-1 6-2 6-6
-            if (size % i == 0) {
-                rowLength = i;
-                for (String oneSpec : specs1) {
-                    // System.out.println(oneSpec + "hi");
-                    transform(rowLength, oneSpec);
-                    // System.out.println(oneSpec + "hi2");
-                    checkFound( oneSpec);
-                    ifOld(old,oneSpec);
-
-                }//end for
-                //that makes it do something, with the orginal array
-            }//end if
-        }//end for
-
-    }//end for for all where you start with the unique array in pileCopy1
-}while(!(f==count1));
-
-System.out.println(f);
-System.out.println(qwerty);
-}//end method
-
+    
+    /**
+     * stdin specification for L method.
+     * @param 2D array of pileCopy1
+     * @param pile array
+     */
     public boolean checkingF(int[][]pileCopy1,int[]pile) {
         boolean veryOld = false;
         for (int h = 0; h < f + 1; h++) {
-
-//
 //            for (int num : pileCopy1[h]) {
 //                System.out.print(num + " ");
 //            }//end for
@@ -456,17 +462,18 @@ System.out.println(qwerty);
 //            System.out.println();
             if (Arrays.equals(pileCopy1[h], pile) && ++qwerty>0) {
                 veryOld = true;
-                //System.out.println("NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE true" + h);
                 break;
             } else {
                 veryOld = false;
-                //System.out.println("NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE false");
-            }
-        }//eend foir
-   return veryOld;
+            }//end if else
+        }//end foir
+       return veryOld;
     }//end method
 
 
+    /**
+     * runsRows method to look through each num in row.
+     */
     public void runRows(){
         for(int i = 1; i <= size; i++) {//this is for all the possible row lengths ie 6-3 6-1 6-2 6-6
             if (size % i == 0) {
@@ -477,15 +484,16 @@ System.out.println(qwerty);
                    // System.out.println(oneSpec + "hi2");
                     checkFound( oneSpec);
                     ifOld(old,oneSpec);
-
                 }//end for
-                //that makes it do something, with the orginal array
             }//end if
-
-
         }//end for
-
     }//end method
+    
+    
+    /**
+     * check if accessible is found.
+     * @param oneSpec regarding string specifications.
+     */
     public void checkFound(String oneSpec) {
         for (int h = 0; h < f + 1; h++) {
             old = false;
@@ -504,13 +512,10 @@ System.out.println(qwerty);
 //            System.out.println();
             if (Arrays.equals(pileCopy1[h], pile)&& ++qwerty>0) {
                 old = true;
- //               System.out.println("NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE true" + h);
                 break;
             } else {
                 old = false;
- //               System.out.println("NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE false");
             }
-
 //            System.out.println(old + " old " + oneSpec + "rowL: " + rowLength);
 //            System.out.println("this is crack " + h);
 //            for (int num : pileCopy1[h]) {
@@ -527,13 +532,15 @@ System.out.println(qwerty);
     }
 
 
+    /**
+     * ifOld method.
+     * @param old boolean
+     * @param oneSpec string
+     */
     public void ifOld(boolean old,String oneSpec){
         if (old == false) {
-
-
             for (int d = 0; d < size; d++) {
                 pileCopy1[f][d] = pile[d];
-
             }//end for
             f++;
 //
@@ -544,19 +551,22 @@ System.out.println(qwerty);
 //                System.out.print(num + " ");
 //            }//end for
 //            System.out.println();
-
         }//end if
-
     }
+    
+    
+    /**
+     * factorial method.
+     * @param number int to check factorial
+     */
     public static long factorial(int number) {
         long result = 1;
-
         for (int factor = 2; factor <= number; factor++) {
             result *= factor;
         }
-
         return result;
     }
+    
     /**
      * method for question (c).
      * consists of all possible sequences of accessible card piles from 1-6
