@@ -528,7 +528,7 @@ public class CP implements CardPile {
      * @param oneSpec string
      */
     public void ifOld(boolean old,String oneSpec){
-        if (old == false) {
+        if (!old) {
             for(int d = 0; d < size; d++){
                 pileCopy1[f][d] = pile[d];
             }//end for
