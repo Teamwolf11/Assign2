@@ -1,6 +1,5 @@
 package week11;
 
-import java.io.*;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -10,7 +9,7 @@ import java.util.Scanner;
  * @author Riya Alagh
  * Sorting program that transforms cards given a respective specification.
  */
-public class CP implements CardPile {
+public class CP implements week11.CardPile {
 
     /**initialise (copy) array pile used to transform throughtout program.*/
     public int[] pile;
@@ -119,6 +118,16 @@ public class CP implements CardPile {
                             card.spec=sc.next();
                             card.transform(card.rowLength,card.spec);
                         default:
+
+                                try{ //throw exception if row length/size are incorrect input
+
+                                        card.message="Your input is not in the correct format l n,L n n n n,p,P n,t r s,c r s. Please change it.";
+                                        throw new CP.CardPileException(card.message);
+
+                                } catch (CardPileException e) {
+                                    System.err.println(e);
+                                    break;
+                                }
                     }//end switchh
                 }//end while
                 break;
@@ -199,63 +208,72 @@ public class CP implements CardPile {
         numRows = size / rowLength;
         numCols = rowLength;
         int index = 0;
-        if (spec.equals("TL")) {
-            for (int cols=0; cols<numCols; cols++) {
-                for(int row = 0;row < numRows;row++) {
-                    pile[index] = placedCards[row][cols];
-                    index++;
-                }//inner for
-            }//outer for
-        } else if (spec.equals("TR")) { //top right transformation
-            for (int cols=numCols-1; cols>=0; cols--) {
+        switch (spec) {
+            case "TL":
+                for (int cols = 0; cols < numCols; cols++) {
+                    for (int row = 0; row < numRows; row++) {
+                        pile[index] = placedCards[row][cols];
+                        index++;
+                    }//inner for
+                }//outer for
+                break;
+            case "TR":  //top right transformation
+                for (int cols = numCols - 1; cols >= 0; cols--) {
+                    for (int row = 0; row < numRows; row++) {
+                        pile[index] = placedCards[row][cols];
+                        index++;
+                    }//inner for
+                }//outer for
+                break;
+            case "BL":  //bottom left transformation
+                for (int cols = 0; cols < numCols; cols++) {
+                    for (int row = numRows - 1; row >= 0; row--) {
+                        pile[index] = placedCards[row][cols];
+                        index++;
+                    }//inner for
+                }//outer for
+                break;
+            case "BR":  //bottom right transformation
+                for (int cols = numCols - 1; cols >= 0; cols--) {
+                    for (int row = numRows - 1; row >= 0; row--) {
+                        pile[index] = placedCards[row][cols];
+                        index++;
+                    }//inner for
+                }//outer for
+                break;
+            case "LT":  //left top transformation
                 for (int row = 0; row < numRows; row++) {
-                    pile[index] = placedCards[row][cols];
-                    index++;
-                }//inner for
-            }//outer for
-        } else if (spec.equals("BL")) { //bottom left transformation
-            for (int cols=0; cols<numCols; cols++) {
-                for (int row =numRows-1; row >=0; row--) {
-                    pile[index] = placedCards[row][cols];
-                    index++;
-                }//inner for
-            }//outer for
-        } else if (spec.equals("BR")) { //bottom right transformation
-            for (int cols=numCols-1; cols>=0; cols--) {
-                for (int row =numRows-1; row >=0; row--) {
-                    pile[index] = placedCards[row][cols];
-                    index++;
-                }//inner for
-            }//outer for
-        } else if (spec.equals("LT")) { //left top transformation
-            for (int row = 0; row < numRows; row++) {
-                for (int cols = 0; cols < numCols; cols++) {
-                    pile[index] = placedCards[row][cols];
-                    index++;
-                }//inner for
-            }//outer for
-        } else if (spec.equals("RT")) { //right top transformation
-            for (int row = 0; row < numRows; row++) {
-                for (int cols=numCols-1; cols>=0; cols--) {
-                    pile[index] = placedCards[row][cols];
-                    index++;
-                }//inner for
-            }//outer for
-        } else if (spec.equals("LB")) { //left bottom transformation
-            for (int row =numRows-1; row >=0; row--) {
-                for (int cols = 0; cols < numCols; cols++) {
-                    pile[index] = placedCards[row][cols];
-                    index++;
-                }//inner for
-            }//outer for
-        } else if (spec.equals("RB")) { //right bottom transformation
-            for (int row =numRows-1; row >=0; row--) {
-                for (int cols=numCols-1; cols>=0; cols--) {
-                    pile[index] = placedCards[row][cols];
-                    index++;
-                }//inner for
-            }//outer for
-        } //end else if for ALL specifications
+                    for (int cols = 0; cols < numCols; cols++) {
+                        pile[index] = placedCards[row][cols];
+                        index++;
+                    }//inner for
+                }//outer for
+                break;
+            case "RT":  //right top transformation
+                for (int row = 0; row < numRows; row++) {
+                    for (int cols = numCols - 1; cols >= 0; cols--) {
+                        pile[index] = placedCards[row][cols];
+                        index++;
+                    }//inner for
+                }//outer for
+                break;
+            case "LB":  //left bottom transformation
+                for (int row = numRows - 1; row >= 0; row--) {
+                    for (int cols = 0; cols < numCols; cols++) {
+                        pile[index] = placedCards[row][cols];
+                        index++;
+                    }//inner for
+                }//outer for
+                break;
+            case "RB":  //right bottom transformation
+                for (int row = numRows - 1; row >= 0; row--) {
+                    for (int cols = numCols - 1; cols >= 0; cols--) {
+                        pile[index] = placedCards[row][cols];
+                        index++;
+                    }//inner for
+                }//outer for
+                break;
+        }
     }//end transform
 
     /**
@@ -372,15 +390,14 @@ public class CP implements CardPile {
      */
     public void loader(int[] orgCards1){
         int countOfInt=0;
-        for (int u =0;u<orgCards1.length;u++) {
-            if(orgCards1[u]!=0){
+        for (int i : orgCards1) {
+            if (i != 0) {
                 countOfInt++;
             }//end while
         }//end for
         originalCards=new int [countOfInt];
-        for(int u=0;u<countOfInt;u++){
-            originalCards[u]=orgCards1[u];
-        }//end for
+        //end for
+        if (countOfInt >= 0) System.arraycopy(orgCards1, 0, originalCards, 0, countOfInt);
         size=originalCards.length;
         load(originalCards);
     }//end loader
@@ -413,9 +430,9 @@ public class CP implements CardPile {
         specs1 = new String[]
                 {"TL", "BL", "TR", "BR", "LT", "LB", "RT", "RB"};
         int [] orgCards=Arrays.copyOf(originalCards,originalCards.length);
-        for(int u=0;u<size;u++){
-            accessibleArray[0][u]=orgCards[u];//add will be at index 0
-        }//end for
+        //add will be at index 0
+        //end for
+        if (size >= 0) System.arraycopy(orgCards, 0, accessibleArray[0], 0, size);
         f++;
         old=false;
         runRows();
@@ -429,15 +446,16 @@ public class CP implements CardPile {
                         rowLength = i;
                         for(String oneSpec:specs1){ //check with orginal array
                             transform(rowLength, oneSpec);
-                            checkFound( oneSpec);
-                            ifOld(old,oneSpec);
+                            checkFound();
+                            ifOld(old);
                         }//end for
                     }//end if
                 }//end for
             }//end for, where you start with unique array in pileCopy1
         }while(!(f==count1));
-        System.out.println(f);
+        System.out.println("The number of accessible piles for "+size+" are "+f);
         System.out.println(comparisons);
+        System.out.println(accessibleArray.length);
     }//end method
 
 
@@ -480,8 +498,8 @@ public class CP implements CardPile {
                 rowLength = i;
                 for (String oneSpec : specs1) {
                     transform(rowLength, oneSpec);
-                    checkFound( oneSpec);
-                    ifOld(old,oneSpec);
+                    checkFound();
+                    ifOld(old);
                 }//end for
             }//end if
         }//end for
@@ -490,9 +508,8 @@ public class CP implements CardPile {
 
     /**
      * check if accessible is found.
-     * @param oneSpec regarding string specifications.
      */
-    public void checkFound(String oneSpec) {
+    public void checkFound() {
         for (int h = 0; h < f + 1; h++) {
             old = false;
 //            for (int num : pileCopy1[h]) {
@@ -525,13 +542,11 @@ public class CP implements CardPile {
     /**
      * ifOld method.
      * @param old boolean
-     * @param oneSpec string
      */
-    public void ifOld(boolean old,String oneSpec){
+    public void ifOld(boolean old){
         if (!old) {
-            for(int d = 0; d < size; d++){
-                accessibleArray[f][d] = pile[d];
-            }//end for
+            //end for
+            if (size >= 0) System.arraycopy(pile, 0, accessibleArray[f], 0, size);
             f++;
 //            for (int num : pileCopy1[f - 1]) {
 //                System.out.print(num + " ");
