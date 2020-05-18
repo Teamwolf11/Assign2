@@ -45,9 +45,6 @@ public class CP implements CardPile {
 
     /**initialise string of possible input specifications.*/
     public String spec;
-
-    /**initialise magic number to avoid error.*/
-    private static final int magicNumber = 50; //needs to be caps lock but i can't see where used in code so delete?
     
     /**initialise specification magic number to avoid error.*/
     private static final int SPECNUMBER = 8;
@@ -65,17 +62,17 @@ public class CP implements CardPile {
      */
     public static void main(String[] args) { //method length 162 lines, needs to be 70
         CP card = new CP();
-        switch (args.length) {
-            case 0: //stdin
-                Scanner scan = new Scanner(System.in);
+        switch (args.length){
+            case 0: Scanner scan = new Scanner(System.in); //stdin 
                 while (scan.hasNextLine()) {
                     String input = scan.nextLine();
                     Scanner sc = new Scanner(input);
-                    switch (sc.next()) {
+                    switch (sc.next()){
                         case "c": //call and print count
                             card.rowLength = Integer.parseInt(sc.next());
                             card.spec = sc.next();
-                            System.out.println(card.count(card.rowLength,card.spec)); //line longer than 80, current 86
+                            System.out.println(card.count
+                               (card.rowLength,card.spec)); //line longer than 80, current 86
                             break;
                         case "l": //load pile from 1 to n
                             card.size = Integer.parseInt(sc.next());
