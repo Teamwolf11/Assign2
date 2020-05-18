@@ -44,7 +44,7 @@ public class CP implements week11.CardPile {
     /**initialise pileCopy as a copy of our originalCards array.*/
     public int[] pileCopy;
 
-    /**initialise accessioble array of accessible numbers*/
+    /**initialise accessioble array of accessible numbers.*/
     public int[][] accessibleArray;
 
     /**initialise string of possible input specifications.*/
@@ -263,9 +263,7 @@ public class CP implements week11.CardPile {
                         index++;
                     }//inner for
                 }//outer for
-                break;
-        }
-    }//end transform
+                break; } }//end transform
 
     /**
      * Returns the minimum positive number of times we would need to call
@@ -388,7 +386,9 @@ public class CP implements week11.CardPile {
         }//end for
         originalCards=new int [countOfInt];
         //end for
-        if (countOfInt >= 0) System.arraycopy(orgCards1, 0, originalCards, 0, countOfInt);
+        if (countOfInt >= 0){
+            System.arraycopy(orgCards1, 0, originalCards, 0, countOfInt);
+        }//end if
         size=originalCards.length;
         load(originalCards);
     }//end loader
@@ -423,7 +423,9 @@ public class CP implements week11.CardPile {
         int [] orgCards=Arrays.copyOf(originalCards,originalCards.length);
         //add will be at index 0
         //end for
-        if (size >= 0) System.arraycopy(orgCards, 0, accessibleArray[0], 0, size);
+        if (size >= 0){
+            System.arraycopy(orgCards, 0, accessibleArray[0], 0, size);
+        }//end if
         f++;
         old=false;
         runRows();
@@ -442,7 +444,7 @@ public class CP implements week11.CardPile {
                         }//end for
                     }//end if
                 }//end for
-            }//end for, where you start with unique array in pileCopy1
+            }//end for
         }while(!(f==count1));
         System.out.println("The number of accessible piles for "+size+" are "+f);
         System.out.println(comparisons);
@@ -459,16 +461,6 @@ public class CP implements week11.CardPile {
     public boolean checkingF(int[][]pileCopy1,int[]pile) {
         boolean veryOld = false;
         for (int h = 0; h < f + 1; h++) {
-//            for (int num : pileCopy1[h]) {
-//                System.out.print(num + " ");
-//            }//end for
-//            System.out.println();
-//
-//            System.out.println("This is pile");
-//            for (int num : pile) {
-//                System.out.print(num + " ");
-//            }
-//            System.out.println();
             if (Arrays.equals(pileCopy1[h], pile) && ++comparisons>0) {
                 veryOld = true;
                 break;
@@ -503,30 +495,12 @@ public class CP implements week11.CardPile {
     public void checkFound() {
         for (int h = 0; h < f + 1; h++) {
             old = false;
-//            for (int num : pileCopy1[h]) {
-//                System.out.print(num + " ");
-//            }//end for
-//            System.out.println();
-//            System.out.println("This is pile");
-//            for (int num : pile) {
-//                System.out.print(num + " ");
-//            }
-//            System.out.println();
             if (Arrays.equals(accessibleArray[h], pile)&& ++comparisons>0) {
                 old = true;
                 break;
             } else {
                 old = false;
             }
-//            for (int num : pileCopy1[h]) {
-//                System.out.print(num + " ");
-//            }//end for
-//            System.out.println();
-//            System.out.println("This is pile");
-//            for (int num : pile) {
-//                System.out.print(num + " ");
-//            }
-//            System.out.println();
         }//end for this for checks if pile is equal to any found array
     }//end method
 
@@ -537,12 +511,10 @@ public class CP implements week11.CardPile {
     public void ifOld(boolean old){
         if (!old) {
             //end for
-            if (size >= 0) System.arraycopy(pile, 0, accessibleArray[f], 0, size);
+            if (size >= 0){
+                System.arraycopy(pile, 0, accessibleArray[f], 0, size);
+            }//end inner if
             f++;
-//            for (int num : pileCopy1[f - 1]) {
-//                System.out.print(num + " ");
-//            }//end for
-//            System.out.println();
         }//end if
     }
 
