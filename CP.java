@@ -118,12 +118,9 @@ public class CP implements week11.CardPile {
                             card.spec=sc.next();
                             card.transform(card.rowLength,card.spec);
                         default:
-
                                 try{ //throw exception if row length/size are incorrect input
-
                                         card.message="Your input is not in the correct format l n,L n n n n,p,P n,t r s,c r s. Please change it.";
                                         throw new CP.CardPileException(card.message);
-
                                 } catch (CardPileException e) {
                                     System.err.println(e);
                                     break;
@@ -430,8 +427,6 @@ public class CP implements week11.CardPile {
         specs1 = new String[]
                 {"TL", "BL", "TR", "BR", "LT", "LB", "RT", "RB"};
         int [] orgCards=Arrays.copyOf(originalCards,originalCards.length);
-        //add will be at index 0
-        //end for
         if (size >= 0) System.arraycopy(orgCards, 0, accessibleArray[0], 0, size);
         f++;
         old=false;
@@ -468,16 +463,6 @@ public class CP implements week11.CardPile {
     public boolean checkingF(int[][]pileCopy1,int[]pile) {
         boolean veryOld = false;
         for (int h = 0; h < f + 1; h++) {
-//            for (int num : pileCopy1[h]) {
-//                System.out.print(num + " ");
-//            }//end for
-//            System.out.println();
-//
-//            System.out.println("This is pile");
-//            for (int num : pile) {
-//                System.out.print(num + " ");
-//            }
-//            System.out.println();
             if (Arrays.equals(pileCopy1[h], pile) && ++comparisons>0) {
                 veryOld = true;
                 break;
@@ -512,30 +497,12 @@ public class CP implements week11.CardPile {
     public void checkFound() {
         for (int h = 0; h < f + 1; h++) {
             old = false;
-//            for (int num : pileCopy1[h]) {
-//                System.out.print(num + " ");
-//            }//end for
-//            System.out.println();
-//            System.out.println("This is pile");
-//            for (int num : pile) {
-//                System.out.print(num + " ");
-//            }
-//            System.out.println();
             if (Arrays.equals(accessibleArray[h], pile)&& ++comparisons>0) {
                 old = true;
                 break;
             } else {
                 old = false;
             }
-//            for (int num : pileCopy1[h]) {
-//                System.out.print(num + " ");
-//            }//end for
-//            System.out.println();
-//            System.out.println("This is pile");
-//            for (int num : pile) {
-//                System.out.print(num + " ");
-//            }
-//            System.out.println();
         }//end for this for checks if pile is equal to any found array
     }//end method
 
@@ -548,10 +515,6 @@ public class CP implements week11.CardPile {
             //end for
             if (size >= 0) System.arraycopy(pile, 0, accessibleArray[f], 0, size);
             f++;
-//            for (int num : pileCopy1[f - 1]) {
-//                System.out.print(num + " ");
-//            }//end for
-//            System.out.println();
         }//end if
     }
 
