@@ -251,19 +251,19 @@ public class CP implements week11.CardPile {
             case "LB":  //left bottom transformation
                 for (int row = numRows - 1; row >= 0; row--) {
                     for (int cols = 0; cols < numCols; cols++) {
-                        pile[index] = placedCards[row][cols];
-                        index++;
+                        pile[index++] = placedCards[row][cols];
                     }//inner for
                 }//outer for
                 break;
             case "RB":  //right bottom transformation
                 for (int row = numRows - 1; row >= 0; row--) {
                     for (int cols = numCols - 1; cols >= 0; cols--) {
-                        pile[index] = placedCards[row][cols];
-                        index++;
+                        pile[index++] = placedCards[row][cols];
                     }//inner for
                 }//outer for
-                break; } }//end transform
+                break; 
+        } 
+    }//end transform
 
     /**
      * Returns the minimum positive number of times we would need to call
