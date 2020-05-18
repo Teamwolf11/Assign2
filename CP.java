@@ -112,7 +112,7 @@ public class CP implements CardPile {
                             for(int i = 0; i<card.numRows; i++){
                                 for(int j = 0; j<card.numCols; j++){
                                   System.out.print
-                                      (card.placedCardscopy[i][j]+" ");
+                                  (card.placedCardscopy[i][j]+" ");
                                 }//end inner for
                                 System.out.println();
                             }//end outer for
@@ -140,7 +140,7 @@ public class CP implements CardPile {
                 card.load(card.size);
                 try{//throw exception if row length/size are incorrect input
                     if(card.size % card.rowLength != 0) {
-                        card.message = "Pile size is not multiple of rowLength.";
+                        card.message="Pile size is not multiple of rowLength.";
                         throw new CardPileException(card.message);
                     }//end if
                 }catch (CardPileException e) {
@@ -151,8 +151,9 @@ public class CP implements CardPile {
                     card.specification=new String[]
                             {"TL","BL","TR","BR","LT","LB","RT","RB"};
                     for (int counter =0;counter<SPECNUMBER;counter++){
-                       System.out.println(card.specification[counter] + " " + card.count
-                                    (card.rowLength, card.specification[counter]));
+                       System.out.println(card.specification[counter] 
+                           + " " + card.count
+                          (card.rowLength,card.specification[counter]));
                     }//end for
                 }//end if
                 break;
@@ -163,7 +164,8 @@ public class CP implements CardPile {
                 card.rowLength = Integer.parseInt(args[1]);
                 card.load(card.size);
                 for(int i = 0; i < args.length - 2; i++){
-                    try{ //throw exception if row length/size are incorrect input
+                    //throw exception if row length/size are incorrect input
+                    try{
                         if (card.size % card.rowLength != 0) {
                             card.message = "Pile size is not multiple of rowLength.";
                             throw new CardPileException(card.message);
@@ -181,7 +183,8 @@ public class CP implements CardPile {
                               card.specification[i].equals("LB") || 
                               card.specification[i].equals("RT") || 
                               card.specification[i].equals("RB"))) {
-                            card.message="Please enter TL, BL, TR, BR, LT, LB, RT, RB.";
+                            card.message = 
+                                "Please enter TL, BL, TR, BR, LT, LB, RT, RB.";
                             throw new CardPileException(card.message);
                         }//end if
                     } catch (CardPileException e) {
