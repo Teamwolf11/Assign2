@@ -72,7 +72,7 @@ public class CP implements CardPile {
                             card.rowLength = Integer.parseInt(sc.next());
                             card.spec = sc.next();
                             System.out.println(card.count
-                               (card.rowLength,card.spec)); //line longer than 80, current 86
+                               (card.rowLength,card.spec));
                             break;
                         case "l": //load pile from 1 to n
                             card.size = Integer.parseInt(sc.next());
@@ -107,10 +107,12 @@ public class CP implements CardPile {
                         case "P": //print cards in rows of length n
                             card.rowLength=sc.nextInt();
                             card.putDown(card.rowLength);
-                            card.placedCardscopy=Arrays.copyOf(card.placedCards,card.placedCards.length); //line too long
+                            card.placedCardscopy=Arrays.copyOf
+                                (card.placedCards,card.placedCards.length);
                             for(int i = 0; i<card.numRows; i++){
                                 for(int j = 0; j<card.numCols; j++){
-                                  System.out.print(card.placedCardscopy[i][j]+" "); //line too long
+                                  System.out.print
+                                      (card.placedCardscopy[i][j]+" ");
                                 }//end inner for
                                 System.out.println();
                             }//end outer for
@@ -187,8 +189,7 @@ public class CP implements CardPile {
                         break;
                     }//end catch
                 }//end for
-                if (card.message==null) {
-                    //Prints out array before any transformations
+                if (card.message==null) {//Prints array before transformations
                     card.pileCopy = card.getPile();
                     for(int num : card.pileCopy) { //print array in one line
                         System.out.print(num + " ");
