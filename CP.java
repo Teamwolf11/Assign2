@@ -428,7 +428,7 @@ public class CP implements CardPile {
             for(int i = 1; i <= size; i++) {//for all possible row lengths 
                 if (size % i == 0) {
                     rowLength = i;
-                    for (String oneSpec : specs1) { //checks with the orginal array
+                    for(String oneSpec:specs1){ //check with orginal array
                         transform(rowLength, oneSpec);
                         checkFound( oneSpec);
                         ifOld(old,oneSpec);
@@ -511,8 +511,6 @@ public class CP implements CardPile {
             } else {
                 old = false;
             }
-//            System.out.println(old + " old " + oneSpec + "rowL: " + rowLength);
-//            System.out.println("this is crack " + h);
 //            for (int num : pileCopy1[h]) {
 //                System.out.print(num + " ");
 //            }//end for
@@ -546,7 +544,7 @@ public class CP implements CardPile {
     /**
      * factorial method.
      * @param number int to check factorial
-     * return results of method
+     * @return results of method
      */
     public static long factorial(int number) {
         long result = 1;
