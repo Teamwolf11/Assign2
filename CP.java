@@ -1,7 +1,6 @@
 package week11;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -530,7 +529,7 @@ public class CP implements CardPile {
      */
     public void ifOld(boolean old,String oneSpec){
         if (old == false) {
-            for (int d = 0; d < size; d++) {
+            for(int d = 0; d < size; d++){
                 pileCopy1[f][d] = pile[d];
             }//end for
             f++;
@@ -552,15 +551,6 @@ public class CP implements CardPile {
             result *= factor;
         }
         return result;
-    }
-    
-    /**
-     * method for question (c).
-     * consists of all possible sequences of accessible card piles from 1-6
-     * @return number of accessible piles
-     */
-    public int accessible(){
-        return 6;
-    }//end method
+    }//end factorial
 
 }//end class
