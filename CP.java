@@ -59,7 +59,7 @@ public class CP implements CardPile {
      * Reads any stdin inputs and deals with respective arguments given.
      * @param args - main method
      */
-    public static void main(String[] args) { //method length 162 lines, needs to be 70
+    public static void main(String[] args){
         CP card = new CP();
         switch (args.length){
             case 0: Scanner scan = new Scanner(System.in); //stdin
