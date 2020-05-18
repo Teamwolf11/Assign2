@@ -1,7 +1,7 @@
 package week11;
 
 import java.io.*;
-import java.lang.*; //redundant import??
+//import java.lang.*; //redundant import??
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -80,7 +80,6 @@ public class CP implements CardPile {
                         case "l": //load pile from 1 to n
                             card.size = Integer.parseInt(sc.next());
                             card.load(card.size);
-                             //Arrays.toString(card.pile);
                             break;
                         case "L": //load pile with stdin input numbers
                             int counter = 0;
@@ -98,10 +97,6 @@ public class CP implements CardPile {
                             for(int u=0;u<countOfInt;u++){
                                 card.originalCards[u]=orgCards1[u];
                             }//end for
-                            for(int num :card.originalCards){
-                                System.out.print(num + " ");//print array in one line
-                            }//end for
-                            System.out.println();
                             card.size=card.originalCards.length;
                             card.load(card.originalCards);
                             break;
@@ -116,8 +111,6 @@ public class CP implements CardPile {
                             card.rowLength=sc.nextInt();
                             card.putDown(card.rowLength);
                             card.placedCardscopy=Arrays.copyOf(card.placedCards,card.placedCards.length); //line too long
-                            //card.numRows = card.size / card.rowLength;
-                            //card.numCols = card.rowLength;
                             for(int i = 0; i<card.numRows; i++){
                                 for(int j = 0; j<card.numCols; j++){
                                   System.out.print(card.placedCardscopy[i][j]+" "); //line too long
@@ -198,28 +191,13 @@ public class CP implements CardPile {
                         System.out.print(num + " ");
                     }//end for
                     System.out.println();
-//---------------------------------------------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------------------------------------------
-//Testing output/code for part 3, question (a):
-//                card.putDown(card.rowLength);
-//                System.out.println(Arrays.deepToString(card.placedCards));
-//---------------------------------------------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------------------------------------------
                     for (int i = 0; i < args.length - 2; i++) {
                         card.transform(card.rowLength, card.specification[i]);
-                        //System.out.println("SIZE IS: "+card.size+"\t ROW LENGTH IS: " + card.rowLength + "\t SPEC IS: " + card.specification[i]); //testing
                         card.pileCopy = card.getPile();
                         for(int num : card.pileCopy){//print array in one line
                             System.out.print(num + " ");
                         }//end for
                         System.out.println();
-//---------------------------------------------------------------------------------------------------------------------------------
-// ---------------------------------------------------------------------------------------------------------------------------------
-//Testing output/code for part 3, question (a):
-//                   card.putDown(card.rowLength);
-//                   System.out.println(Arrays.deepToString(card.placedCards));
-//---------------------------------------------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------------------------------------------
                     }//end for
                 }//end if to check exceptions
         }//end switch
@@ -269,8 +247,6 @@ public class CP implements CardPile {
         placedCards = new int[numRows][numCols];
         for(int row = 0; row < numRows; row++){
             for(int cols = 0; cols < numCols; cols++){
-                //System.out.println(pile[index]); //testing
-                //System.out.println(row+" "+cols); //testing
                 placedCards[row][cols] = pile[index];
                 index++;
             }//inner for
@@ -292,12 +268,9 @@ public class CP implements CardPile {
         int index = 0;
         if (spec.equals("TL")) {
             for (int cols=0; cols<numCols; cols++) {
-                //System.out.println("Col: "+ cols+"index: "+index);
                 for(int row = 0;row < numRows;row++) {
-                    //System.out.println("Row: "+row+"Col: "+ cols+"index: "+index);
                     pile[index] = placedCards[row][cols];
                     index++;
-                    //System.out.println("Row: "+row+"Col: "+ cols+"index: "+index+"It has inputed pile"); //testing
                 }//inner for
             }//outer for
         } else if (spec.equals("TR")) { //top right transformation
