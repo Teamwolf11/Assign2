@@ -446,7 +446,7 @@ public class CP implements week11.CardPile {
                 }//end for
             }//end for
         }while(!(f==count1));
-        System.out.println("The number of accessible piles for "+size+" are "+f);
+        System.out.println("Number of accessible piles for "+size+" are "+f);
         System.out.println(comparisons);
         System.out.println(accessibleArray.length);
     }//end method
