@@ -44,7 +44,7 @@ public class CP implements CardPile {
 
     /**initialise string of possible input specifications.*/
     public String spec;
-    
+
     /**initialise specification magic number to avoid error.*/
     private static final int SPECNUMBER = 8;
 
@@ -62,7 +62,7 @@ public class CP implements CardPile {
     public static void main(String[] args) { //method length 162 lines, needs to be 70
         CP card = new CP();
         switch (args.length){
-            case 0: Scanner scan = new Scanner(System.in); //stdin 
+            case 0: Scanner scan = new Scanner(System.in); //stdin
                 while (scan.hasNextLine()) {
                     String input = scan.nextLine();
                     Scanner sc = new Scanner(input);
@@ -71,7 +71,7 @@ public class CP implements CardPile {
                             card.rowLength = Integer.parseInt(sc.next());
                             card.spec = sc.next();
                             System.out.println(card.count
-                               (card.rowLength,card.spec));
+                                    (card.rowLength,card.spec));
                             break;
                         case "l": //load pile from 1 to n
                             card.size = Integer.parseInt(sc.next());
@@ -83,18 +83,7 @@ public class CP implements CardPile {
                             while (sc.hasNextInt()) {
                                 orgCards1[counter++]=(sc.nextInt());
                             }//end while
-                            int countOfInt=0;
-                            for (int u =0;u<orgCards1.length;u++) {
-                                if(orgCards1[u]!=0){
-                                    countOfInt++;
-                                }//end while
-                            }//end for
-                            card.originalCards=new int [countOfInt];
-                            for(int u=0;u<countOfInt;u++){
-                                card.originalCards[u]=orgCards1[u];
-                            }//end for
-                            card.size=card.originalCards.length;
-                            card.load(card.originalCards);
+                            card.loader(orgCards1);
                             break;
                         case "p": //print cards as white spaced seperated list
                             card.pileCopy = Arrays.copyOf(card.pile, card.size);
@@ -107,14 +96,8 @@ public class CP implements CardPile {
                             card.rowLength=sc.nextInt();
                             card.putDown(card.rowLength);
                             card.placedCardscopy=Arrays.copyOf
-                                (card.placedCards,card.placedCards.length);
-                            for(int i = 0; i<card.numRows; i++){
-                                for(int j = 0; j<card.numCols; j++){
-                                  System.out.print
-                                    (card.placedCardscopy[i][j]+" ");
-                                }//end inner for
-                                System.out.println();
-                            }//end outer for
+                                    (card.placedCards,card.placedCards.length);
+                            card.print2D(card.placedCardscopy);
                             break;
                         case "t": //call transform with given sepcifications
                             card.rowLength=sc.nextInt();
@@ -150,9 +133,9 @@ public class CP implements CardPile {
                     card.specification=new String[]
                             {"TL","BL","TR","BR","LT","LB","RT","RB"};
                     for (int counter =0;counter<SPECNUMBER;counter++){
-                       System.out.println(card.specification[counter] 
-                         + " " + card.count
-                         (card.rowLength,card.specification[counter]));
+                        System.out.println(card.specification[counter]
+                                + " " + card.count
+                                (card.rowLength,card.specification[counter]));
                     }//end for
                 }//end if
                 break;
@@ -174,16 +157,16 @@ public class CP implements CardPile {
                         break;
                     }//end catch
                     try { //exception code incorrect specification
-                        if (!(card.specification[i].equals("TL") || 
-                              card.specification[i].equals("TR") ||
-                              card.specification[i].equals("BL") || 
-                              card.specification[i].equals("BR") ||
-                              card.specification[i].equals("LT") || 
-                              card.specification[i].equals("LB") || 
-                              card.specification[i].equals("RT") || 
-                              card.specification[i].equals("RB"))) {
-                            card.message = 
-                                "Please enter TL, BL, TR, BR, LT, LB, RT, RB.";
+                        if (!(card.specification[i].equals("TL") ||
+                                card.specification[i].equals("TR") ||
+                                card.specification[i].equals("BL") ||
+                                card.specification[i].equals("BR") ||
+                                card.specification[i].equals("LT") ||
+                                card.specification[i].equals("LB") ||
+                                card.specification[i].equals("RT") ||
+                                card.specification[i].equals("RB"))) {
+                            card.message =
+                                    "Please enter TL, BL, TR, BR, LT, LB, RT, RB.";
                             throw new CardPileException(card.message);
                         }//end if
                     } catch (CardPileException e) {
@@ -209,6 +192,32 @@ public class CP implements CardPile {
         }//end switch
     }//end main method
 
+public void print2D(int [] [] placedCardscopy){
+    for(int i = 0; i<numRows; i++){
+        for(int j = 0; j<numCols; j++){
+            System.out.print(placedCardscopy[i][j]+" ");
+        }//end inner for
+        System.out.println();
+    }//end outer for
+
+}//end method print2D
+    public void loader(int[] orgCards1){
+        int countOfInt=0;
+        for (int u =0;u<orgCards1.length;u++) {
+            if(orgCards1[u]!=0){
+                countOfInt++;
+            }//end while
+        }//end for
+
+        originalCards=new int [countOfInt];
+        for(int u=0;u<countOfInt;u++){
+            originalCards[u]=orgCards1[u];
+        }//end for
+        size=originalCards.length;
+        load(originalCards);
+
+    }//end loader
+
     /**
      * Loads a copy of the given array as the pile of cards.
      * @param originalCards is the int array for original card pile
@@ -228,7 +237,7 @@ public class CP implements CardPile {
         originalCards = new int[size];
         for(int counter=0;counter<size;counter++){ //initialise array with n
             originalCards[counter] = counter + 1;
-        } //end for loop 
+        } //end for loop
         pile = Arrays.copyOf(originalCards, size);
     }//end load
 
@@ -363,7 +372,7 @@ public class CP implements CardPile {
     private static class CardPileException extends Throwable {
         /**Declare serial version uid.*/
         public static final long serialVersionUID = 1234545;
-         /**
+        /**
          * CardPileException construstor.
          * @param s - string
          */
