@@ -266,7 +266,7 @@ public class CP implements CardPile {
     }//end method count
 
         /**
-     * command-line specification with 2 input args, case 2
+     * command-line specification with 2 input args, case 2.
      * @param args String array
      */
     public void input2Args(String [] args){
@@ -285,8 +285,8 @@ public class CP implements CardPile {
             specification=new String[]
                     {"TL","BL","TR","BR","LT","LB","RT","RB"};
             for (int counter =0;counter<SPECNUMBER;counter++){
-                System.out.println(specification[counter]
-                        + " " + count(rowLength,specification[counter]));
+                System.out.println(specification[counter]+ " " + count
+                      (rowLength,specification[counter]));
             }//end for
         }//end if
     }//end method input2args
