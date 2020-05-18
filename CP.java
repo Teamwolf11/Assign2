@@ -1,6 +1,7 @@
 package week11;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -27,6 +28,8 @@ public class CP implements CardPile {
     /**initialise string array of possible input specifications.*/
     public String[] specification;
 
+    public String [] specs1;
+
     /**initialise original array of cards.*/
     public int[] originalCards;
 
@@ -42,6 +45,8 @@ public class CP implements CardPile {
     /**initialise pileCopy as a copy of our originalCards array.*/
     public int[] pileCopy;
 
+    public int[][] pileCopy1;
+
     /**initialise string of possible input specifications.*/
     public String spec;
 
@@ -50,6 +55,10 @@ public class CP implements CardPile {
 
     /**initialise COPY of placedCards 2D array.*/
     public int [] [] placedCardscopy;
+//this is f is the position of the last array in the accessible arrrays
+    int f;
+
+    public boolean old;
 
     /**
      * Creates new CP class.
@@ -108,13 +117,9 @@ public class CP implements CardPile {
                 }//end while
                 break;
             case 1: //part(c)
-//                card.size=Integer.parseInt(args[0]);
-//                card.load(card.size);
-//                //this is for 3c
-//            card.transform(3,);
-//            Arrays.equals(card.pile, card.originalCards);
-//                    }
-//                }
+             card.size=Integer.parseInt(args[0]);
+             card.Q3c(card.size);
+
                 break;
             case 2://2 command line args
                 card.input2Args(args);
@@ -265,7 +270,7 @@ public class CP implements CardPile {
         return counter;
     }//end method count
 
-        /**
+    /**
      * command-line specification with 2 input args, case 2.
      * @param args String array
      */
@@ -286,11 +291,11 @@ public class CP implements CardPile {
                     {"TL","BL","TR","BR","LT","LB","RT","RB"};
             for (int counter =0;counter<SPECNUMBER;counter++){
                 System.out.println(specification[counter]+ " " + count
-                      (rowLength,specification[counter]));
+                        (rowLength,specification[counter]));
             }//end for
         }//end if
     }//end method input2args
-    
+
     /**
      * command-line specification with 3 input args (the default switch case).
      * @param args String array
@@ -355,7 +360,7 @@ public class CP implements CardPile {
             System.out.println();
         }//end outer for
     }//end method print2D
-    
+
     /**
      * stdin specification for L method.
      * @param orgCards1 array
@@ -389,7 +394,166 @@ public class CP implements CardPile {
             System.out.print(s);
         }//end constructor
     }//end inner class
-    
+public void Q3c(int size) {
+
+    load(size);
+f=0;
+    pileCopy1= new int [(int) factorial(size)][size];
+    specs1 = new String[]
+            {"TL", "BL", "TR", "BR", "LT", "LB", "RT", "RB"};
+    int [] orgCards=Arrays.copyOf(originalCards,originalCards.length);
+    for(int u=0;u<size;u++){
+
+        pileCopy1[0][u]=orgCards[u];//add will be at index 0
+    }//end for
+f++;
+old=false;
+runRows();
+
+int count1=0;
+do {
+    for (int m = 1; m < f; m++) {
+        count1=f;
+        load(pileCopy1[m]);
+        for(int i = 1; i <= size; i++) {//this is for all the possible row lengths ie 6-3 6-1 6-2 6-6
+            if (size % i == 0) {
+                rowLength = i;
+                for (String oneSpec : specs1) {
+                    // System.out.println(oneSpec + "hi");
+                    transform(rowLength, oneSpec);
+                    // System.out.println(oneSpec + "hi2");
+                    checkFound( oneSpec);
+                    ifOld(old,oneSpec);
+
+                }//end for
+                //that makes it do something, with the orginal array
+            }//end if
+        }//end for
+
+    }//end for for all where you start with the unique array in pileCopy1
+}while(!(f==count1));
+
+System.out.println(f);
+}//end method
+
+    public boolean checkingF(int[] []pileCopy1,int[]pile) {
+        boolean veryOld = false;
+        for (int h = 0; h < f + 1; h++) {
+
+//
+//            for (int num : pileCopy1[h]) {
+//                System.out.print(num + " ");
+//            }//end for
+//            System.out.println();
+//
+//            System.out.println("This is pile");
+//            for (int num : pile) {
+//                System.out.print(num + " ");
+//            }
+//            System.out.println();
+            if (Arrays.equals(pileCopy1[h], pile) ) {
+                veryOld = true;
+                //System.out.println("NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE true" + h);
+                break;
+            } else {
+                veryOld = false;
+                //System.out.println("NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE false");
+            }
+        }//eend foir
+   return veryOld;
+    }//end method
+
+
+    public void runRows(){
+        for(int i = 1; i <= size; i++) {//this is for all the possible row lengths ie 6-3 6-1 6-2 6-6
+            if (size % i == 0) {
+                rowLength = i;
+                for (String oneSpec : specs1) {
+                   // System.out.println(oneSpec + "hi");
+                    transform(rowLength, oneSpec);
+                   // System.out.println(oneSpec + "hi2");
+                    checkFound( oneSpec);
+                    ifOld(old,oneSpec);
+
+                }//end for
+                //that makes it do something, with the orginal array
+            }//end if
+
+
+        }//end for
+
+    }//end method
+    public void checkFound(String oneSpec) {
+        for (int h = 0; h < f + 1; h++) {
+            old = false;
+//            System.out.println("NIGHTMARE NIGHTMARE NIGHTMARE");
+//            System.out.println(oneSpec + "hi3 " + old + " " + rowLength);
+//            System.out.println("this is crack " + h);
+//            for (int num : pileCopy1[h]) {
+//                System.out.print(num + " ");
+//            }//end for
+//            System.out.println();
+//
+//            System.out.println("This is pile");
+//            for (int num : pile) {
+//                System.out.print(num + " ");
+//            }
+//            System.out.println();
+            if (Arrays.equals(pileCopy1[h], pile)) {
+                old = true;
+ //               System.out.println("NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE true" + h);
+                break;
+            } else {
+                old = false;
+ //               System.out.println("NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE NIGHTMARE false");
+            }
+
+//            System.out.println(old + " old " + oneSpec + "rowL: " + rowLength);
+//            System.out.println("this is crack " + h);
+//            for (int num : pileCopy1[h]) {
+//                System.out.print(num + " ");
+//            }//end for
+//            System.out.println();
+//
+//            System.out.println("This is pile");
+//            for (int num : pile) {
+//                System.out.print(num + " ");
+//            }
+//            System.out.println();
+        }//end for this for checks if pile is equal to any found array
+    }
+
+
+    public void ifOld(boolean old,String oneSpec){
+        if (old == false) {
+
+
+            for (int d = 0; d < size; d++) {
+                pileCopy1[f][d] = pile[d];
+
+            }//end for
+            f++;
+//
+//            System.out.println("The size is" + f);
+//            System.out.println("I have been added to pileCopy2 " + rowLength + oneSpec + (f)+pileCopy1[]);
+//            System.out.println("this is crack");
+//            for (int num : pileCopy1[f - 1]) {
+//                System.out.print(num + " ");
+//            }//end for
+//            System.out.println();
+
+        }//end if
+
+    }
+    public static long factorial(int number) {
+        long result = 1;
+
+        for (int factor = 2; factor <= number; factor++) {
+            result *= factor;
+        }
+
+        return result;
+    }
     /**
      * method for question (c).
      * consists of all possible sequences of accessible card piles from 1-6
