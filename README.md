@@ -3,4 +3,4 @@ Assignment 2 241
 
 
 
-hi there, this is a very secret assignment that is worth 20% of my overall grade for 241, I have never done gitHub in my life. Hopefully me and Riya Alagh pull this off.
+This was a university assignment for 241. The full documentation for the requirements of the project is in the report.pdf.
